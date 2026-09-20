@@ -232,11 +232,16 @@ main{padding-block:var(--space-6) var(--space-12)}
 .sheet[open]{animation:sheet-in var(--dur-medium) var(--ease-out)}
 @keyframes sheet-in{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
 @media (min-width:600px){.sheet{width:min(100% - 2rem,560px);margin:auto;border-radius:var(--radius-xl);box-shadow:var(--shadow-md)}}
-.sheet-handle{width:40px;height:4px;border-radius:2px;background:var(--color-border-strong);margin:0 auto var(--space-5)}
-@media (min-width:600px){.sheet-handle{display:none}}
-.sheet-body{padding:var(--space-3) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom))}
+.sheet-grip{display:flex;justify-content:center;align-items:center;height:32px;margin:calc(var(--space-3) * -1) calc(var(--space-5) * -1) var(--space-2);touch-action:none;cursor:grab}
+.sheet-grip:active{cursor:grabbing}
+.sheet-handle{width:40px;height:4px;border-radius:2px;background:var(--color-border-strong)}
+@media (min-width:600px){.sheet-grip{display:none}}
+.sheet-body{position:relative;padding:var(--space-3) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom))}
 @media (min-width:600px){.sheet-body{padding:var(--space-8)}}
-.sheet h2{font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--space-6)}
+.sheet-close{position:absolute;top:var(--space-6);right:var(--space-4);width:40px;height:40px;min-height:0;padding:0;border:0;border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary)}
+.sheet-close:hover{background:color-mix(in srgb,var(--color-text-primary) 12%,transparent);color:var(--color-text-primary)}
+@media (min-width:600px){.sheet-close{top:var(--space-6);right:var(--space-6)}}
+.sheet h2{font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--space-6);padding-right:52px}
 .sheet p{color:var(--color-text-secondary)}
 .field{display:grid;gap:var(--space-2);margin-bottom:var(--space-5)}
 .field label{font-family:var(--font-display);font-weight:600;font-size:var(--font-size-sm)}
@@ -334,7 +339,8 @@ select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-righ
 
 <dialog class="sheet" id="dlg" aria-labelledby="dlgTitle">
   <form id="form" class="sheet-body" novalidate>
-    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-grip" aria-hidden="true"><span class="sheet-handle"></span></div>
+    <button type="button" class="btn sheet-close" aria-label="Close"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <h2 id="dlgTitle">New subscription</h2>
     <div class="field" id="fldName">
       <label for="fName">Name<span class="req">Required</span></label>
@@ -388,7 +394,8 @@ select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-righ
 
 <dialog class="sheet" id="dlgSettings" aria-labelledby="setTitle">
   <div class="sheet-body">
-    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-grip" aria-hidden="true"><span class="sheet-handle"></span></div>
+    <button type="button" class="btn sheet-close" aria-label="Close"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <h2 id="setTitle">Settings</h2>
     <section class="set-group" aria-labelledby="setBackup">
       <h3 class="eyebrow" id="setBackup">Backup</h3>
@@ -407,7 +414,8 @@ select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-righ
 
 <dialog class="sheet" id="dlgImport" aria-labelledby="impTitle">
   <div class="sheet-body">
-    <div class="sheet-handle" aria-hidden="true"></div>
+    <div class="sheet-grip" aria-hidden="true"><span class="sheet-handle"></span></div>
+    <button type="button" class="btn sheet-close" aria-label="Close"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     <h2 id="impTitle">Import backup</h2>
     <p id="impText"></p>
     <div class="actions">
@@ -683,6 +691,20 @@ $('#btnSample').addEventListener('click', () => {
 });
 function addDays(ymd, n) { const dt = parseYMD(ymd); dt.setDate(dt.getDate() + n); return toYMD(dt); }
 
+/* ── シート共通: ×ボタン、背景タップ、つまみの下スワイプで閉じる ── */
+for (const d of document.querySelectorAll('dialog.sheet')) {
+  d.addEventListener('click', e => { if (e.target === d) d.close(); });
+  d.querySelector('.sheet-close').addEventListener('click', () => d.close());
+  const grip = d.querySelector('.sheet-grip');
+  let y0 = null;
+  grip.addEventListener('pointerdown', e => { y0 = e.clientY; grip.setPointerCapture(e.pointerId); });
+  grip.addEventListener('pointermove', e => { if (y0 !== null) d.style.transform = `translateY(${Math.max(0, e.clientY - y0)}px)`; });
+  const release = e => { if (y0 === null) return; const dy = e.clientY - y0; y0 = null; d.style.transform = ''; if (dy > 80) d.close(); };
+  grip.addEventListener('pointerup', release);
+  grip.addEventListener('pointercancel', release);
+  d.addEventListener('close', () => { d.style.transform = ''; });
+}
+
 /* ── 設定 ── */
 const dlgSettings = $('#dlgSettings');
 $('#btnSettings').addEventListener('click', () => dlgSettings.showModal());
@@ -714,7 +736,8 @@ fileEl.addEventListener('change', async () => {
   $('#impText').textContent = `${list.length}件を読み込みます。今登録されている${items.length}件は、この内容に置き換わります。`;
   dlgImport.showModal(); $('#btnImportNo').focus();
 });
-$('#btnImportNo').addEventListener('click', () => { pendingImport = null; dlgImport.close(); });
+$('#btnImportNo').addEventListener('click', () => dlgImport.close());
+dlgImport.addEventListener('close', () => { pendingImport = null; });
 $('#btnImportYes').addEventListener('click', () => {
   if (pendingImport) { items = pendingImport; pendingImport = null; save(); render(); toast(`${items.length}件を読み込みました`); }
   dlgImport.close();
