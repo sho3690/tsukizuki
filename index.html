@@ -183,10 +183,17 @@ main{padding-block:var(--space-8) var(--space-12)}
 .empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm)}
 .empty .btn{margin-top:var(--space-5)}
 
-/* ── フッター ── */
+/* ── フッター（バックアップは折りたたんでおく） ── */
 .foot{margin-top:var(--space-16);padding-top:var(--space-6);border-top:1px solid var(--color-border)}
+.foot .note{font-size:var(--font-size-sm);color:var(--color-text-secondary);max-width:40em}
+.backup{margin-top:var(--space-2)}
+.backup summary{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;font-size:var(--font-size-sm);color:var(--color-text-secondary);cursor:pointer;list-style:none;border-radius:var(--radius-sm);user-select:none;transition:color var(--dur-short) var(--ease-standard)}
+.backup summary::-webkit-details-marker{display:none}
+.backup summary::before{content:"";flex:none;width:.45em;height:.45em;margin-right:2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(-45deg);transition:transform var(--dur-short) var(--ease-standard)}
+.backup[open] summary::before{transform:translateY(-2px) rotate(45deg)}
+.backup summary:hover{color:var(--color-text-primary)}
+.backup .note{margin-bottom:var(--space-1)}
 .foot-actions{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-left:calc(var(--space-3) * -1)}
-.foot .note{margin-top:var(--space-3);font-size:var(--font-size-sm);color:var(--color-text-secondary);max-width:40em}
 
 /* ── 追加・編集シート ── */
 .sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:var(--shadow-md);overflow:auto}
@@ -280,12 +287,16 @@ select.input{cursor:pointer}
   </div>
 
   <footer class="foot">
-    <div class="foot-actions">
-      <button type="button" class="btn btn-tertiary" id="btnExport">バックアップを保存</button>
-      <button type="button" class="btn btn-tertiary" id="btnImport">バックアップを読み込む</button>
-      <input type="file" id="fileImport" accept=".json,application/json" hidden>
-    </div>
-    <p class="note">登録した内容は、この端末のブラウザの中にだけ保存されます。外部には送信されません。機種変更のときはバックアップを保存して、新しい端末で読み込んでください。</p>
+    <p class="note">登録した内容は、この端末のブラウザの中にだけ保存されます。外部には送信されません。</p>
+    <details class="backup" id="backup">
+      <summary>バックアップ</summary>
+      <p class="note">機種変更のときは、バックアップを保存して新しい端末で読み込んでください。</p>
+      <div class="foot-actions">
+        <button type="button" class="btn btn-tertiary" id="btnExport">バックアップを保存</button>
+        <button type="button" class="btn btn-tertiary" id="btnImport">バックアップを読み込む</button>
+        <input type="file" id="fileImport" accept=".json,application/json" hidden>
+      </div>
+    </details>
   </footer>
 </main>
 
