@@ -3,59 +3,69 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f8f9fa" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#212529" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5f6fa" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0b1020" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="月々">
 <meta name="description" content="サブスクの月額と次の支払日を、ひと目で。登録内容は端末の中にだけ保存されます。">
-<title>月々 — サブスクの帳簿</title>
+<title>月々 — Subscription Ledger</title>
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap">
 <style>
 :root{
   color-scheme: light dark;
   /* 家の色（design-system.md） */
   --color-blue-950:#03045e; --color-blue-900:#023e8a; --color-blue-700:#0077b6; --color-blue-600:#0096c7;
   --color-blue-500:#00b4d8; --color-blue-300:#48cae4; --color-blue-200:#90e0ef; --color-blue-100:#ade8f4; --color-blue-50:#caf0f8;
-  --color-neutral-50:#f8f9fa; --color-neutral-100:#e9ecef; --color-neutral-200:#dee2e6; --color-neutral-300:#ced4da;
-  --color-neutral-400:#adb5bd; --color-neutral-600:#6c757d; --color-neutral-700:#495057; --color-neutral-800:#343a40; --color-neutral-900:#212529;
 
-  --color-background:var(--color-neutral-50);
+  --color-background:#f5f6fa;
   --color-surface:#ffffff;
-  --color-surface-muted:var(--color-neutral-100);
-  --color-text-primary:var(--color-neutral-900);
-  --color-text-secondary:var(--color-neutral-700);
-  --color-text-muted:var(--color-neutral-600);
-  --color-text-inverse:#ffffff;
-  --color-border:var(--color-neutral-200);
-  --color-border-strong:var(--color-neutral-300);
-  --color-input-border:var(--color-neutral-600);
-  --color-primary:var(--color-blue-900);
-  --color-primary-hover:var(--color-blue-950);
+  --color-surface-muted:#eef0f5;
+  --color-text-primary:#141a2b;
+  --color-text-secondary:#4b5468;
+  --color-text-muted:#737c90;
+  --color-border:#e5e8ef;
+  --color-border-strong:#cfd4e0;
+  --color-input-border:#9aa3b8;
+  --color-primary:var(--color-blue-700);
+  --color-primary-hover:var(--color-blue-900);
+  --color-primary-soft:#e3f5fb;
   --color-on-primary:#ffffff;
   --color-focus-ring:var(--color-blue-600);
   --color-error:#b42318;
   --color-error-strong:#b42318;
   --color-error-muted:#fef3f2;
-  --color-inverse-surface:var(--color-neutral-900);
+  --color-inverse-surface:#141a2b;
   --color-inverse-text:#ffffff;
   --color-inverse-link:var(--color-blue-200);
-  --color-switch-off:var(--color-neutral-600);
+  --color-switch-off:#b7bfd0;
   --color-knob:#ffffff;
 
-  /* 内訳の帯: 金額の大きい順に濃い→薄い（青1色の段階） */
-  --ramp-1:var(--color-blue-950); --ramp-2:var(--color-blue-900); --ramp-3:var(--color-blue-700); --ramp-4:var(--color-blue-600);
-  --ramp-5:var(--color-blue-500); --ramp-6:var(--color-blue-300); --ramp-7:var(--color-blue-200); --ramp-other:var(--color-neutral-300);
+  --grad-primary:linear-gradient(135deg,#023e8a 0%,#0077b6 55%,#00b4d8 100%);
+  --hero-bg:linear-gradient(160deg,#0a3d91 0%,#03045e 58%,#020331 100%);
+  --shadow-sm:0 1px 2px rgba(20,26,43,.05),0 1px 1px rgba(20,26,43,.03);
+  --shadow-md:0 14px 36px -14px rgba(20,26,43,.18);
+  --shadow-hero:0 24px 48px -20px rgba(3,4,94,.55);
+  --shadow-primary:0 10px 24px -10px rgba(0,119,182,.75);
+  --shadow-primary-hover:0 14px 28px -10px rgba(0,119,182,.8);
 
+  /* 内訳の帯: 金額の大きい順に鮮やか→淡い（紺のカードの上で映える段階） */
+  --ramp-1:#00b4d8; --ramp-2:#22c1df; --ramp-3:#48cae4; --ramp-4:#6cd6ea;
+  --ramp-5:#90e0ef; --ramp-6:#ade8f4; --ramp-7:#caf0f8; --ramp-other:rgba(255,255,255,.3);
+
+  --font-display:"Space Grotesk","Inter",system-ui,-apple-system,sans-serif;
+  --font-body:"Inter",system-ui,-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI",sans-serif;
   --font-size-xs:.75rem; --font-size-sm:.875rem; --font-size-md:1rem; --font-size-lg:1.125rem; --font-size-xl:1.25rem;
   --font-size-2xl:1.5rem; --font-size-3xl:2rem; --font-size-4xl:2.5rem;
   --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem; --space-6:1.5rem;
   --space-8:2rem; --space-10:2.5rem; --space-12:3rem; --space-16:4rem; --space-20:5rem;
-  --radius-sm:.375rem; --radius-md:.5rem; --radius-lg:.75rem; --radius-xl:1rem;
-  --shadow-sm:0 1px 2px rgba(0,0,0,.06); --shadow-md:0 4px 12px rgba(0,0,0,.08);
+  --radius-sm:.5rem; --radius-md:.75rem; --radius-lg:1.125rem; --radius-xl:1.5rem; --radius-pill:999px;
   --width-content:960px;
   --ease-standard:cubic-bezier(.2,0,0,1); --ease-out:cubic-bezier(0,0,0,1); --ease-in:cubic-bezier(.3,0,1,1);
   --dur-short:150ms; --dur-medium:250ms;
@@ -63,34 +73,40 @@
 }
 @media (prefers-color-scheme: dark){
   :root{
-    --color-background:#212529;
-    --color-surface:#343a40;
-    --color-surface-muted:#495057;
-    --color-text-primary:#f8f9fa;
-    --color-text-secondary:#dee2e6;
-    --color-text-muted:#adb5bd;
-    --color-border:#495057;
-    --color-border-strong:#6c757d;
-    --color-input-border:#adb5bd;
+    --color-background:#0b1020;
+    --color-surface:#121a2e;
+    --color-surface-muted:#1a2338;
+    --color-text-primary:#eef2ff;
+    --color-text-secondary:#b9c2d6;
+    --color-text-muted:#8a94ab;
+    --color-border:#222c45;
+    --color-border-strong:#34405f;
+    --color-input-border:#4a5878;
     --color-primary:#48cae4;
     --color-primary-hover:#90e0ef;
-    --color-on-primary:#212529;
+    --color-primary-soft:rgba(72,202,228,.16);
+    --color-on-primary:#06101c;
     --color-focus-ring:#48cae4;
-    --color-error:#f5a097;
-    --color-error-strong:#b42318;
-    --color-inverse-surface:#f8f9fa;
-    --color-inverse-text:#212529;
+    --color-error:#ff8a80;
+    --color-error-strong:#d93025;
+    --color-error-muted:rgba(255,138,128,.12);
+    --color-inverse-surface:#eef2ff;
+    --color-inverse-text:#0b1020;
     --color-inverse-link:#023e8a;
-    --color-switch-off:#adb5bd;
-    --color-knob:#212529;
-    --ramp-1:#caf0f8; --ramp-2:#ade8f4; --ramp-3:#90e0ef; --ramp-4:#48cae4; --ramp-5:#00b4d8; --ramp-6:#0096c7; --ramp-7:#0077b6; --ramp-other:#6c757d;
-    --shadow-md:0 4px 12px rgba(0,0,0,.4);
+    --color-switch-off:#4a5878;
+    --color-knob:#eef2ff;
+    --grad-primary:linear-gradient(135deg,#0096c7 0%,#48cae4 100%);
+    --hero-bg:linear-gradient(160deg,#12377f 0%,#070b3f 58%,#04062a 100%);
+    --shadow-md:0 18px 44px -16px rgba(0,0,0,.6);
+    --shadow-hero:0 24px 48px -18px rgba(0,0,0,.7);
+    --shadow-primary:0 10px 24px -10px rgba(72,202,228,.55);
+    --shadow-primary-hover:0 14px 28px -10px rgba(72,202,228,.65);
   }
 }
 
 *{box-sizing:border-box}
 html{font-size:16px}
-body{margin:0;background:var(--color-background);color:var(--color-text-primary);font-family:system-ui,-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic UI",sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
+body{margin:0;background:var(--color-background);color:var(--color-text-primary);font-family:var(--font-body);line-height:1.5;-webkit-font-smoothing:antialiased;padding-bottom:env(safe-area-inset-bottom)}
 h1,h2,h3,p,ul,ol{margin:0}
 ul,ol{padding:0;list-style:none}
 button{font:inherit;color:inherit}
@@ -98,145 +114,168 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}
 .wrap{max-width:var(--width-content);margin-inline:auto;padding-inline:var(--space-4)}
 @media (min-width:600px){.wrap{padding-inline:var(--space-6)}}
+.eyebrow{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--color-text-muted)}
+.ico{width:18px;height:18px;flex:none}
 
-/* ── ヘッダー（スクロール後だけ下線） ── */
-.top{position:sticky;top:0;z-index:10;background:var(--color-background);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top);transition:border-color var(--dur-short) var(--ease-standard)}
+/* ── ヘッダー（すりガラス。スクロール後だけ下線） ── */
+.top{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--color-background) 78%,transparent);-webkit-backdrop-filter:saturate(180%) blur(16px);backdrop-filter:saturate(180%) blur(16px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top);transition:border-color var(--dur-short) var(--ease-standard)}
 .top.is-stuck{border-bottom-color:var(--color-border)}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);height:var(--header-h)}
-.brand{display:flex;align-items:baseline;gap:var(--space-3);min-width:0}
-.brand h1{font-size:var(--font-size-xl);font-weight:600;letter-spacing:.08em;line-height:1.2}
-.brand .sub{font-size:var(--font-size-sm);color:var(--color-text-secondary);white-space:nowrap}
+.brand{display:flex;align-items:center;gap:var(--space-3);min-width:0}
+.brand .mark{width:36px;height:36px;border-radius:10px;box-shadow:var(--shadow-sm);flex:none}
+.brand h1{font-size:var(--font-size-lg);font-weight:700;letter-spacing:.1em;line-height:1.1}
+.brand .sub{display:block;margin-top:3px;font-family:var(--font-display);font-size:.66rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--color-text-muted);line-height:1.1;white-space:nowrap}
 
-/* ── ボタン ── */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-5);border-radius:var(--radius-md);font-weight:600;font-size:var(--font-size-md);line-height:1.2;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background-color var(--dur-short) var(--ease-standard),border-color var(--dur-short) var(--ease-standard),color var(--dur-short) var(--ease-standard)}
-.btn-primary{background:var(--color-primary);color:var(--color-on-primary)}
-.btn-primary:hover{background:var(--color-primary-hover)}
-.btn-primary:active{background:color-mix(in srgb,var(--color-primary-hover) 90%,var(--color-on-primary))}
-.btn-secondary{background:var(--color-surface);color:var(--color-primary);border-color:var(--color-border-strong)}
-.btn-secondary:hover{background:color-mix(in srgb,var(--color-surface) 92%,var(--color-text-primary))}
-.btn-secondary:active{background:color-mix(in srgb,var(--color-surface) 90%,var(--color-text-primary))}
-.btn-tertiary{background:transparent;color:var(--color-primary);padding-inline:var(--space-3)}
-.btn-tertiary:hover{background:color-mix(in srgb,var(--color-text-primary) 8%,transparent)}
-.btn-tertiary:active{background:color-mix(in srgb,var(--color-text-primary) 10%,transparent)}
-.btn-danger{background:var(--color-surface);color:var(--color-error);border-color:var(--color-error)}
-.btn-danger:hover{background:color-mix(in srgb,var(--color-surface) 92%,var(--color-error))}
-.btn-danger:active{background:color-mix(in srgb,var(--color-surface) 90%,var(--color-error))}
-.btn-danger-filled{background:var(--color-error-strong);color:#ffffff}
-.btn-danger-filled:hover{background:color-mix(in srgb,var(--color-error-strong) 92%,#ffffff)}
-.btn-danger-filled:active{background:color-mix(in srgb,var(--color-error-strong) 90%,#ffffff)}
-.btn:disabled,.btn[aria-disabled="true"]{background:var(--color-surface-muted);color:var(--color-text-muted);border-color:var(--color-border-strong);cursor:not-allowed}
+/* ── ボタン（ピル型） ── */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-5);border-radius:var(--radius-pill);font-family:var(--font-display);font-weight:600;font-size:var(--font-size-md);letter-spacing:.01em;line-height:1.2;border:1px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap;transition:background-color var(--dur-short) var(--ease-standard),border-color var(--dur-short) var(--ease-standard),color var(--dur-short) var(--ease-standard),transform var(--dur-short) var(--ease-standard),box-shadow var(--dur-short) var(--ease-standard),filter var(--dur-short) var(--ease-standard)}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--grad-primary);color:var(--color-on-primary);box-shadow:var(--shadow-primary),inset 0 1px 0 rgba(255,255,255,.22)}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:var(--shadow-primary-hover),inset 0 1px 0 rgba(255,255,255,.22);filter:saturate(1.12)}
+.btn-primary:active{transform:translateY(0) scale(.97)}
+.btn-secondary{background:var(--color-surface);color:var(--color-text-primary);border-color:var(--color-border-strong);box-shadow:var(--shadow-sm)}
+.btn-secondary:hover{border-color:var(--color-primary);color:var(--color-primary)}
+.btn-tertiary{background:transparent;color:var(--color-text-secondary);padding-inline:var(--space-4)}
+.btn-tertiary:hover{background:color-mix(in srgb,var(--color-text-primary) 7%,transparent);color:var(--color-text-primary)}
+.btn-danger{background:transparent;color:var(--color-error);border-color:color-mix(in srgb,var(--color-error) 45%,transparent)}
+.btn-danger:hover{background:color-mix(in srgb,var(--color-error) 8%,transparent);border-color:var(--color-error)}
+.btn-danger-filled{background:var(--color-error-strong);color:#ffffff;box-shadow:0 8px 20px -10px var(--color-error-strong)}
+.btn-danger-filled:hover{filter:brightness(1.08)}
+.btn-sm{min-height:38px;padding:0 var(--space-4);font-size:var(--font-size-sm)}
+.btn-sm .ico{width:16px;height:16px}
+.btn:disabled,.btn[aria-disabled="true"]{background:var(--color-surface-muted);color:var(--color-text-muted);border-color:var(--color-border-strong);cursor:not-allowed;transform:none;box-shadow:none;filter:none}
 
 /* ── 本体レイアウト ── */
-main{padding-block:var(--space-8) var(--space-12)}
-.layout{display:grid;gap:var(--space-12)}
+main{padding-block:var(--space-6) var(--space-12)}
+@media (min-width:600px){main{padding-block:var(--space-8) var(--space-16)}}
+.layout{display:grid;gap:var(--space-10)}
 @media (min-width:840px){
-  .layout{grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:var(--space-16);align-items:start}
-  .summary{position:sticky;top:calc(var(--header-h) + var(--space-8))}
+  .layout{grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:var(--space-12);align-items:start}
+  .summary{position:sticky;top:calc(var(--header-h) + var(--space-6))}
 }
 
-/* ── 合計（ヒーロー）と内訳の帯 ── */
-.summary .label{font-size:var(--font-size-sm);font-weight:600;color:var(--color-text-secondary);margin-bottom:var(--space-2)}
-.amount{font-size:var(--font-size-4xl);font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline}
-.amount .yen{font-size:var(--font-size-2xl);font-weight:500;color:var(--color-text-secondary);margin-right:.06em}
-.meta{margin-top:var(--space-3);color:var(--color-text-secondary);font-size:var(--font-size-sm);display:flex;gap:var(--space-4);flex-wrap:wrap;font-variant-numeric:tabular-nums}
-.meta b{font-weight:600;color:var(--color-text-primary)}
-.band{display:flex;gap:2px;height:14px;margin-top:var(--space-6);border-radius:var(--radius-sm);overflow:hidden;background:var(--color-surface-muted)}
-.band .seg{flex:0 1 auto;min-width:3px;background:var(--c)}
+/* ── 合計（紺のカード）と内訳の帯 ── */
+.hero{position:relative;overflow:hidden;isolation:isolate;padding:var(--space-6) var(--space-5) var(--space-5);border-radius:var(--radius-xl);background:var(--hero-bg);color:#ffffff;box-shadow:var(--shadow-hero)}
+@media (min-width:600px){.hero{padding:var(--space-8) var(--space-6) var(--space-6)}}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(70% 60% at 96% -8%,rgba(144,224,239,.5),transparent 62%),radial-gradient(48% 48% at -8% 108%,rgba(0,180,216,.3),transparent 62%)}
+.hero::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.06)}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.hero .eyebrow{color:rgba(255,255,255,.72)}
+.wordmark{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.24em;color:rgba(255,255,255,.42)}
+.amount{margin-top:var(--space-4);font-family:var(--font-display);font-size:clamp(2.75rem,9vw,3.5rem);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:.06em}
+.amount .yen{font-size:.5em;font-weight:500;color:rgba(255,255,255,.6)}
+.meta{margin-top:var(--space-3);color:rgba(255,255,255,.72);font-size:var(--font-size-sm);display:flex;gap:var(--space-4);flex-wrap:wrap;font-variant-numeric:tabular-nums;font-family:var(--font-display);font-weight:500}
+.meta b{font-weight:700;color:#ffffff}
+.band{display:flex;gap:3px;height:10px;margin-top:var(--space-6);border-radius:var(--radius-pill)}
+.band:empty{background:rgba(255,255,255,.14)}
+.band .seg{flex:0 1 auto;min-width:4px;background:var(--c);border-radius:var(--radius-pill)}
 .c1{--c:var(--ramp-1)}.c2{--c:var(--ramp-2)}.c3{--c:var(--ramp-3)}.c4{--c:var(--ramp-4)}.c5{--c:var(--ramp-5)}.c6{--c:var(--ramp-6)}.c7{--c:var(--ramp-7)}.c-other{--c:var(--ramp-other)}
-.legend{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);margin-top:var(--space-3);font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.legend{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);margin-top:var(--space-4);font-size:var(--font-size-sm);color:rgba(255,255,255,.8);font-variant-numeric:tabular-nums}
 .legend .key{display:inline-flex;align-items:center;gap:var(--space-2)}
-.sw{width:10px;height:10px;border-radius:2px;background:var(--c);flex:none}
-.legend .pct{color:var(--color-text-secondary)}
+.sw{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}
+.legend .pct{font-family:var(--font-display);font-weight:600;color:#ffffff}
 
-.upcoming{margin-top:var(--space-10)}
-.upcoming h2,.ledger h2{font-size:var(--font-size-lg);font-weight:600;line-height:1.3}
-.upcoming ol{margin-top:var(--space-3);border-top:1px solid var(--color-border)}
-.upcoming li{display:grid;grid-template-columns:5.5em minmax(0,1fr) auto;gap:var(--space-3);align-items:baseline;padding:var(--space-3) 0;border-bottom:1px solid var(--color-border);font-variant-numeric:tabular-nums}
-.upcoming .when{font-weight:600}
-.upcoming .when.is-soon{color:var(--color-primary)}
-.upcoming .who{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.upcoming .how{font-weight:600}
-.upcoming li.none{display:block;padding:var(--space-3) 0;color:var(--color-text-secondary);font-size:var(--font-size-sm);border-bottom:1px solid var(--color-border)}
+.upcoming{margin-top:var(--space-8)}
+.upcoming ol{margin-top:var(--space-3);display:grid;gap:var(--space-2)}
+.upcoming li{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-3);align-items:center;padding:var(--space-3) var(--space-4);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);font-variant-numeric:tabular-nums}
+.upcoming .when{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.04em;padding:4px 10px;border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary);white-space:nowrap}
+.upcoming .when.is-soon{background:var(--color-primary-soft);color:var(--color-primary)}
+.upcoming .who{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500}
+.upcoming .how{font-family:var(--font-display);font-weight:700}
+.upcoming li.none{display:block;padding:var(--space-4);color:var(--color-text-secondary);font-size:var(--font-size-sm);background:transparent;border-style:dashed;box-shadow:none}
 
 /* ── 帳簿（一覧） ── */
-.ledger{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);padding:var(--space-5) var(--space-4) var(--space-2)}
-@media (min-width:600px){.ledger{padding:var(--space-6) var(--space-6) var(--space-3)}}
-.ledger-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-3)}
-.ledger .count{font-weight:400;color:var(--color-text-secondary);font-size:var(--font-size-sm);margin-left:var(--space-2)}
-.sort{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary)}
-.select{min-height:44px;padding:0 var(--space-3);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text-primary);font:inherit;font-size:var(--font-size-sm);cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard)}
-.select:hover{border-color:var(--color-input-border)}
-.rows{border-top:1px solid var(--color-border)}
-.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;column-gap:var(--space-3);align-items:center;width:100%;min-height:64px;padding:var(--space-3) var(--space-2);margin:0;background:transparent;border:0;border-bottom:1px solid var(--color-border);border-radius:0;text-align:left;cursor:pointer;transition:background-color var(--dur-short) var(--ease-standard)}
-.row:hover{background:color-mix(in srgb,var(--color-surface) 92%,var(--color-text-primary))}
-.row:active{background:color-mix(in srgb,var(--color-surface) 90%,var(--color-text-primary))}
-.row:focus-visible{outline-offset:-2px;border-radius:var(--radius-sm)}
+.ledger{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-3) var(--space-3);box-shadow:var(--shadow-md)}
+@media (min-width:600px){.ledger{padding:var(--space-6) var(--space-5) var(--space-4)}}
+.ledger-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-3);padding-inline:var(--space-2)}
+.ledger-head h2{display:inline-flex;align-items:center;gap:var(--space-2)}
+.count{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:0;min-width:22px;height:22px;padding:0 7px;border-radius:var(--radius-pill);background:var(--color-primary-soft);color:var(--color-primary);display:inline-flex;align-items:center;justify-content:center}
+.count:empty{display:none}
+.sort{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-size:var(--font-size-sm);font-weight:600;color:var(--color-text-secondary)}
+.select-wrap{position:relative;display:inline-block}
+.select-wrap::after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--color-text-secondary)}
+.select{appearance:none;-webkit-appearance:none;min-height:40px;padding:0 calc(var(--space-4) + 18px) 0 var(--space-4);border:1px solid var(--color-border-strong);border-radius:var(--radius-pill);background:var(--color-surface);color:var(--color-text-primary);font:inherit;font-size:var(--font-size-sm);font-weight:600;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard)}
+.select:hover{border-color:var(--color-primary)}
+.rows > li + li{border-top:1px solid var(--color-border)}
+.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;column-gap:var(--space-3);align-items:center;width:100%;min-height:64px;padding:var(--space-3) var(--space-3);margin:0;background:transparent;border:0;border-radius:var(--radius-lg);text-align:left;cursor:pointer;transition:background-color var(--dur-short) var(--ease-standard),transform var(--dur-short) var(--ease-standard)}
+.row:hover{background:var(--color-surface-muted)}
+.row:active{transform:scale(.995)}
+.row:focus-visible{outline-offset:-2px}
+.row .sw{width:12px;height:12px;border-radius:4px;box-shadow:inset 0 0 0 1px rgba(20,26,43,.1)}
 .row .name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row .sub{display:flex;gap:var(--space-3);flex-wrap:wrap;color:var(--color-text-secondary);font-size:var(--font-size-sm);margin-top:2px}
-.row .amt{text-align:right;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.row .amt small{display:block;font-size:var(--font-size-sm);font-weight:400;color:var(--color-text-secondary)}
+.row .sub{display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;color:var(--color-text-secondary);font-size:var(--font-size-sm);margin-top:2px}
+.row .amt{text-align:right;font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+.row .amt small{display:block;font-size:var(--font-size-xs);font-weight:500;color:var(--color-text-secondary)}
+.chev{width:8px;height:8px;margin-left:var(--space-1);border-right:1.5px solid var(--color-text-muted);border-bottom:1.5px solid var(--color-text-muted);transform:rotate(-45deg);opacity:.55;transition:transform var(--dur-short) var(--ease-standard),opacity var(--dur-short) var(--ease-standard)}
+.row:hover .chev{opacity:1;transform:translateX(2px) rotate(-45deg)}
 .row.is-paused .name,.row.is-paused .amt{color:var(--color-text-muted)}
 .row.is-paused .sw{opacity:.4}
-.tag{display:inline-block;font-size:var(--font-size-xs);line-height:1.4;padding:1px var(--space-2);border:1px solid var(--color-border-strong);border-radius:999px;color:var(--color-text-secondary)}
-.empty{padding:var(--space-8) 0 var(--space-6);text-align:left}
-.empty p{max-width:34em}
-.empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm)}
+.rows .c-other{--c:var(--color-border-strong)}
+.tag{display:inline-block;font-family:var(--font-display);font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.6;padding:1px var(--space-2);border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary)}
+.empty{padding:var(--space-8) var(--space-2) var(--space-6)}
+.empty-title{font-family:var(--font-display);font-size:var(--font-size-xl);font-weight:700;letter-spacing:-.01em}
+.empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm);max-width:34em}
 .empty .btn{margin-top:var(--space-5)}
 
 /* ── フッター（バックアップは折りたたんでおく） ── */
-.foot{margin-top:var(--space-16);padding-top:var(--space-6);border-top:1px solid var(--color-border)}
-.foot .note{font-size:var(--font-size-sm);color:var(--color-text-secondary);max-width:40em}
+.foot{margin-top:var(--space-12);padding-top:var(--space-6);border-top:1px solid var(--color-border)}
+.foot .note{font-size:var(--font-size-sm);color:var(--color-text-secondary);max-width:44em}
+.foot .note .eyebrow{display:inline-block;margin-right:var(--space-2);color:var(--color-primary)}
 .backup{margin-top:var(--space-2)}
-.backup summary{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;font-size:var(--font-size-sm);color:var(--color-text-secondary);cursor:pointer;list-style:none;border-radius:var(--radius-sm);user-select:none;transition:color var(--dur-short) var(--ease-standard)}
+.backup summary{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--color-text-muted);cursor:pointer;list-style:none;border-radius:var(--radius-sm);user-select:none;transition:color var(--dur-short) var(--ease-standard)}
 .backup summary::-webkit-details-marker{display:none}
-.backup summary::before{content:"";flex:none;width:.45em;height:.45em;margin-right:2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(-45deg);transition:transform var(--dur-short) var(--ease-standard)}
+.backup summary::before{content:"";flex:none;width:.5em;height:.5em;margin-right:2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(-45deg);transition:transform var(--dur-short) var(--ease-standard)}
 .backup[open] summary::before{transform:translateY(-2px) rotate(45deg)}
 .backup summary:hover{color:var(--color-text-primary)}
-.backup .note{margin-bottom:var(--space-1)}
-.foot-actions{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-left:calc(var(--space-3) * -1)}
+.backup .note{margin-bottom:var(--space-3)}
+.foot-actions{display:flex;gap:var(--space-2);flex-wrap:wrap}
 
 /* ── 追加・編集シート ── */
-.sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:var(--shadow-md);overflow:auto}
-.sheet::backdrop{background:rgba(33,37,41,.45)}
+.sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:0 -12px 48px -12px rgba(0,0,0,.35);overflow:auto}
+.sheet::backdrop{background:rgba(3,4,40,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .sheet[open]{animation:sheet-in var(--dur-medium) var(--ease-out)}
 @keyframes sheet-in{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
-@media (min-width:600px){.sheet{width:min(100% - 2rem,560px);margin:auto;border-radius:var(--radius-xl)}}
-.sheet-body{padding:var(--space-6) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom))}
-@media (min-width:600px){.sheet-body{padding:var(--space-8) var(--space-8)}}
-.sheet h2{font-size:var(--font-size-xl);font-weight:600;margin-bottom:var(--space-6)}
+@media (min-width:600px){.sheet{width:min(100% - 2rem,560px);margin:auto;border-radius:var(--radius-xl);box-shadow:var(--shadow-md)}}
+.sheet-handle{width:40px;height:4px;border-radius:2px;background:var(--color-border-strong);margin:0 auto var(--space-5)}
+@media (min-width:600px){.sheet-handle{display:none}}
+.sheet-body{padding:var(--space-3) var(--space-5) calc(var(--space-6) + env(safe-area-inset-bottom))}
+@media (min-width:600px){.sheet-body{padding:var(--space-8)}}
+.sheet h2{font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--space-6)}
 .sheet p{color:var(--color-text-secondary)}
 .field{display:grid;gap:var(--space-2);margin-bottom:var(--space-5)}
-.field label{font-weight:600;font-size:var(--font-size-sm)}
-.req{font-weight:400;color:var(--color-text-secondary);margin-left:var(--space-2)}
-.input{width:100%;min-height:44px;padding:0 var(--space-3);border:1px solid var(--color-input-border);border-radius:var(--radius-md);background:var(--color-surface);color:var(--color-text-primary);font:inherit;font-size:16px;transition:border-color var(--dur-short) var(--ease-standard)}
+.field label{font-family:var(--font-display);font-weight:600;font-size:var(--font-size-sm)}
+.req{font-family:var(--font-body);font-weight:500;font-size:var(--font-size-xs);color:var(--color-text-muted);margin-left:var(--space-2);letter-spacing:.02em}
+.input{width:100%;min-height:48px;padding:0 var(--space-4);border:1px solid var(--color-border-strong);border-radius:var(--radius-md);background:var(--color-surface-muted);color:var(--color-text-primary);font:inherit;font-size:16px;transition:border-color var(--dur-short) var(--ease-standard),background-color var(--dur-short) var(--ease-standard),box-shadow var(--dur-short) var(--ease-standard)}
 .input::placeholder{color:var(--color-text-muted)}
-.input:hover{border-color:var(--color-text-secondary)}
-.input:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:1px;border-color:var(--color-focus-ring)}
-select.input{cursor:pointer}
+.input:hover{border-color:var(--color-input-border)}
+.input:focus-visible{outline:none;border-color:var(--color-primary);background:var(--color-surface);box-shadow:0 0 0 4px var(--color-primary-soft)}
+select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-right:calc(var(--space-4) + 20px)}
+.field .select-wrap{display:block}
 .msg{font-size:var(--font-size-sm);color:var(--color-text-secondary);min-height:1.4em}
-.field.is-error .input{border-color:var(--color-error)}
+.field.is-error .input{border-color:var(--color-error);box-shadow:0 0 0 4px color-mix(in srgb,var(--color-error) 15%,transparent)}
 .field.is-error .msg{color:var(--color-error)}
 .grid2{display:grid;gap:var(--space-5);grid-template-columns:1fr}
 @media (min-width:600px){.grid2{grid-template-columns:1fr 1fr;gap:var(--space-4)}}
 .amount-wrap{position:relative}
-.amount-wrap .prefix{position:absolute;left:var(--space-3);top:50%;transform:translateY(-50%);color:var(--color-text-secondary);pointer-events:none}
-.amount-wrap .input{padding-left:calc(var(--space-3) + 1.1em)}
-.switch-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:44px;margin-bottom:var(--space-2)}
+.amount-wrap .prefix{position:absolute;left:var(--space-4);top:50%;transform:translateY(-50%);color:var(--color-text-muted);font-family:var(--font-display);font-weight:600;pointer-events:none}
+.amount-wrap .input{padding-left:calc(var(--space-4) + 1.1em);font-family:var(--font-display);font-weight:600;font-variant-numeric:tabular-nums}
+.switch-row{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);min-height:56px;margin-bottom:var(--space-2);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-4);border:1px solid var(--color-border);border-radius:var(--radius-md);background:var(--color-surface-muted)}
+.switch-title{display:block;font-family:var(--font-display);font-weight:600;font-size:var(--font-size-sm)}
+.switch-sub{display:block;font-size:var(--font-size-xs);color:var(--color-text-secondary)}
 .switch{position:relative;flex:none;width:60px;height:44px;padding:0;border:0;background:transparent;cursor:pointer;border-radius:var(--radius-md)}
 .switch::before{content:"";position:absolute;left:4px;top:6px;width:52px;height:32px;border-radius:16px;background:var(--color-switch-off);transition:background-color var(--dur-short) var(--ease-standard)}
-.switch::after{content:"";position:absolute;left:8px;top:10px;width:24px;height:24px;border-radius:12px;background:var(--color-knob);transition:transform var(--dur-short) var(--ease-standard)}
-.switch[aria-checked="true"]::before{background:var(--color-primary)}
+.switch::after{content:"";position:absolute;left:7px;top:9px;width:26px;height:26px;border-radius:13px;background:var(--color-knob);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform var(--dur-short) var(--ease-standard)}
+.switch[aria-checked="true"]::before{background:var(--grad-primary)}
 .switch[aria-checked="true"]::after{transform:translateX(20px)}
 .actions{display:flex;gap:var(--space-2);justify-content:flex-end;align-items:center;flex-wrap:wrap;margin-top:var(--space-6)}
 .actions .spacer{flex:1}
-.confirm{margin-top:var(--space-6);padding:var(--space-4);border:1px solid var(--color-error);border-radius:var(--radius-md);background:var(--color-surface)}
+.confirm{margin-top:var(--space-6);padding:var(--space-4) var(--space-5);border:1px solid color-mix(in srgb,var(--color-error) 40%,transparent);border-radius:var(--radius-md);background:var(--color-error-muted)}
 .confirm p{color:var(--color-text-primary);font-weight:600}
 .confirm .actions{margin-top:var(--space-3)}
 
 /* ── 通知 ── */
-.toast{position:fixed;left:50%;bottom:calc(var(--space-6) + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:var(--space-3);max-width:calc(100% - var(--space-8));padding:var(--space-2) var(--space-2) var(--space-2) var(--space-5);background:var(--color-inverse-surface);color:var(--color-inverse-text);border-radius:var(--radius-md);box-shadow:var(--shadow-md);animation:toast-in var(--dur-medium) var(--ease-out)}
-.toast .btn-tertiary{color:var(--color-inverse-link)}
-.toast .btn-tertiary:hover{background:color-mix(in srgb,var(--color-inverse-text) 8%,transparent)}
+.toast{position:fixed;left:50%;bottom:calc(var(--space-6) + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:var(--space-3);max-width:calc(100% - var(--space-8));padding:var(--space-2) var(--space-2) var(--space-2) var(--space-5);background:var(--color-inverse-surface);color:var(--color-inverse-text);border-radius:var(--radius-pill);box-shadow:var(--shadow-md);font-size:var(--font-size-sm);animation:toast-in var(--dur-medium) var(--ease-out)}
+.toast .btn-tertiary{color:var(--color-inverse-link);min-height:36px}
+.toast .btn-tertiary:hover{background:color-mix(in srgb,var(--color-inverse-text) 8%,transparent);color:var(--color-inverse-link)}
 @keyframes toast-in{from{transform:translate(-50%,12px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
 
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -246,8 +285,11 @@ select.input{cursor:pointer}
 <body>
 <header class="top" id="top">
   <div class="wrap">
-    <div class="brand"><h1>月々</h1><span class="sub">サブスクの帳簿</span></div>
-    <button type="button" class="btn btn-primary" id="btnAdd">追加する</button>
+    <div class="brand">
+      <img class="mark" src="icons/icon.svg" alt="" width="36" height="36">
+      <div><h1>月々</h1><span class="sub">Subscription Ledger</span></div>
+    </div>
+    <button type="button" class="btn btn-primary" id="btnAdd"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</button>
   </div>
 </header>
 
@@ -255,45 +297,47 @@ select.input{cursor:pointer}
   <div id="sentinel" aria-hidden="true"></div>
   <div class="layout">
     <section class="summary" aria-labelledby="hSummary">
-      <h2 class="label" id="hSummary">月額換算の合計</h2>
-      <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
-      <p class="meta"><span>年間 <b id="heroYear">¥0</b></span><span id="heroCount">0件</span></p>
-      <div class="band" id="band" role="img" aria-label="内訳はありません"></div>
-      <ul class="legend" id="legend" aria-label="内訳"></ul>
+      <div class="hero">
+        <div class="hero-top"><h2 class="eyebrow" id="hSummary">Monthly total</h2><span class="wordmark" aria-hidden="true">TSUKIZUKI</span></div>
+        <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
+        <p class="meta"><span><b id="heroYear">¥0</b> / year</span><span id="heroCount">0 active</span></p>
+        <div class="band" id="band" role="img" aria-label="内訳はありません"></div>
+        <ul class="legend" id="legend" aria-label="内訳"></ul>
+      </div>
       <section class="upcoming" aria-labelledby="hUp">
-        <h2 id="hUp">次に支払うもの</h2>
+        <h2 class="eyebrow" id="hUp">Upcoming</h2>
         <ol id="upcoming"></ol>
       </section>
     </section>
 
     <section class="ledger" aria-labelledby="hList">
       <div class="ledger-head">
-        <h2 id="hList">すべてのサブスク<span class="count" id="count"></span></h2>
-        <label class="sort">並び替え
-          <select class="select" id="sort">
-            <option value="date">支払日が近い順</option>
-            <option value="amount">金額が高い順</option>
-            <option value="name">名前順</option>
-          </select>
+        <h2 class="eyebrow" id="hList">All subscriptions<span class="count" id="count"></span></h2>
+        <label class="sort">Sort
+          <span class="select-wrap"><select class="select" id="sort">
+            <option value="date">Next payment</option>
+            <option value="amount">Amount</option>
+            <option value="name">Name</option>
+          </select></span>
         </label>
       </div>
       <ul class="rows" id="rows"></ul>
       <div class="empty" id="empty" hidden>
-        <p>まだ登録がありません。</p>
-        <p class="hint">右上の「追加する」から1件ずつ登録できます。まず様子を見たいときは、サンプルを入れて試せます。</p>
-        <button type="button" class="btn btn-secondary" id="btnSample">サンプルを入れて試す</button>
+        <p class="empty-title">Nothing here yet.</p>
+        <p class="hint">右上の「Add」から1件ずつ登録できます。まず様子を見たいときは、サンプルを入れて試せます。</p>
+        <button type="button" class="btn btn-secondary" id="btnSample">Load sample data</button>
       </div>
     </section>
   </div>
 
   <footer class="foot">
-    <p class="note">登録した内容は、この端末のブラウザの中にだけ保存されます。外部には送信されません。</p>
+    <p class="note"><span class="eyebrow">Local only</span>登録した内容は、この端末のブラウザの中にだけ保存されます。外部には送信されません。</p>
     <details class="backup" id="backup">
-      <summary>バックアップ</summary>
+      <summary>Backup</summary>
       <p class="note">機種変更のときは、バックアップを保存して新しい端末で読み込んでください。</p>
       <div class="foot-actions">
-        <button type="button" class="btn btn-tertiary" id="btnExport">バックアップを保存</button>
-        <button type="button" class="btn btn-tertiary" id="btnImport">バックアップを読み込む</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnExport"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>Export JSON</button>
+        <button type="button" class="btn btn-secondary btn-sm" id="btnImport"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m0 0 4 4m-4-4-4 4M5 19h14"/></svg>Import JSON</button>
         <input type="file" id="fileImport" accept=".json,application/json" hidden>
       </div>
     </details>
@@ -302,52 +346,53 @@ select.input{cursor:pointer}
 
 <dialog class="sheet" id="dlg" aria-labelledby="dlgTitle">
   <form id="form" class="sheet-body" novalidate>
-    <h2 id="dlgTitle">サブスクを追加</h2>
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 id="dlgTitle">New subscription</h2>
     <div class="field" id="fldName">
-      <label for="fName">サービス名<span class="req">必須</span></label>
+      <label for="fName">Name<span class="req">Required</span></label>
       <input class="input" id="fName" type="text" maxlength="60" autocomplete="off" placeholder="例: Netflix" aria-describedby="msgName">
       <p class="msg" id="msgName"></p>
     </div>
     <div class="grid2">
       <div class="field" id="fldAmount">
-        <label for="fAmount">金額<span class="req">必須</span></label>
-        <div class="amount-wrap"><span class="prefix" aria-hidden="true">¥</span><input class="input" id="fAmount" type="text" inputmode="numeric" autocomplete="off" placeholder="例: 1590" aria-describedby="msgAmount"></div>
+        <label for="fAmount">Amount<span class="req">Required</span></label>
+        <div class="amount-wrap"><span class="prefix" aria-hidden="true">¥</span><input class="input" id="fAmount" type="text" inputmode="numeric" autocomplete="off" placeholder="1590" aria-describedby="msgAmount"></div>
         <p class="msg" id="msgAmount">税込の金額を数字で入力</p>
       </div>
       <div class="field">
-        <label for="fCycle">支払いの間隔</label>
-        <select class="input" id="fCycle">
-          <option value="month">毎月</option>
-          <option value="quarter">3か月ごと</option>
-          <option value="half">半年ごと</option>
-          <option value="year">毎年</option>
-        </select>
+        <label for="fCycle">Billing cycle</label>
+        <span class="select-wrap"><select class="input" id="fCycle">
+          <option value="month">Monthly</option>
+          <option value="quarter">Every 3 months</option>
+          <option value="half">Every 6 months</option>
+          <option value="year">Yearly</option>
+        </select></span>
       </div>
     </div>
     <div class="field" id="fldNext">
-      <label for="fNext">次回の支払日<span class="req">必須</span></label>
+      <label for="fNext">Next payment<span class="req">Required</span></label>
       <input class="input" id="fNext" type="date" aria-describedby="msgNext">
       <p class="msg" id="msgNext">その日を過ぎると、次の支払日に自動で進みます</p>
     </div>
     <div class="field">
-      <label for="fMemo">メモ</label>
+      <label for="fMemo">Note</label>
       <input class="input" id="fMemo" type="text" maxlength="200" autocomplete="off" placeholder="例: 家族プラン、解約は3月まで">
     </div>
     <div class="switch-row">
-      <span id="lblPaused">一時停止中（合計に含めない）</span>
+      <span id="lblPaused"><span class="switch-title">Paused</span><span class="switch-sub">一時停止中は合計に含めません</span></span>
       <button type="button" class="switch" role="switch" aria-checked="false" aria-labelledby="lblPaused" id="fPaused"></button>
     </div>
     <div class="actions" id="actions">
-      <button type="button" class="btn btn-danger" id="btnDelete">削除する</button>
+      <button type="button" class="btn btn-danger" id="btnDelete">Delete</button>
       <span class="spacer"></span>
-      <button type="button" class="btn btn-tertiary" id="btnCancel">やめる</button>
-      <button type="submit" class="btn btn-primary" id="btnSave">保存する</button>
+      <button type="button" class="btn btn-tertiary" id="btnCancel">Cancel</button>
+      <button type="submit" class="btn btn-primary" id="btnSave">Save</button>
     </div>
     <div class="confirm" id="confirm" hidden>
       <p id="confirmText"></p>
       <div class="actions">
-        <button type="button" class="btn btn-tertiary" id="btnDeleteNo">やめる</button>
-        <button type="button" class="btn btn-danger-filled" id="btnDeleteYes">削除する</button>
+        <button type="button" class="btn btn-tertiary" id="btnDeleteNo">Cancel</button>
+        <button type="button" class="btn btn-danger-filled" id="btnDeleteYes">Delete</button>
       </div>
     </div>
   </form>
@@ -355,11 +400,12 @@ select.input{cursor:pointer}
 
 <dialog class="sheet" id="dlgImport" aria-labelledby="impTitle">
   <div class="sheet-body">
-    <h2 id="impTitle">バックアップを読み込む</h2>
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 id="impTitle">Import backup</h2>
     <p id="impText"></p>
     <div class="actions">
-      <button type="button" class="btn btn-tertiary" id="btnImportNo">やめる</button>
-      <button type="button" class="btn btn-primary" id="btnImportYes">置き換えて読み込む</button>
+      <button type="button" class="btn btn-tertiary" id="btnImportNo">Cancel</button>
+      <button type="button" class="btn btn-primary" id="btnImportYes">Replace &amp; import</button>
     </div>
   </div>
 </dialog>
@@ -375,10 +421,10 @@ select.input{cursor:pointer}
 const KEY = 'tsukizuki.v1';
 const SORT_KEY = 'tsukizuki.sort';
 const CYCLES = {
-  month:   { label: '毎月',      months: 1 },
-  quarter: { label: '3か月ごと', months: 3 },
-  half:    { label: '半年ごと',  months: 6 },
-  year:    { label: '毎年',      months: 12 },
+  month:   { label: 'Monthly',        months: 1 },
+  quarter: { label: 'Every 3 months', months: 3 },
+  half:    { label: 'Every 6 months', months: 6 },
+  year:    { label: 'Yearly',         months: 12 },
 };
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, children = []) => {
@@ -416,14 +462,14 @@ function rollForward(item) {
 }
 function fmtDate(ymd) {
   const d = parseYMD(ymd);
-  const y = d.getFullYear() !== today().getFullYear() ? `${d.getFullYear()}年` : '';
-  return `${y}${d.getMonth() + 1}月${d.getDate()}日`;
+  const y = d.getFullYear() !== today().getFullYear() ? `${d.getFullYear()}/` : '';
+  return `${y}${d.getMonth() + 1}/${d.getDate()}`;
 }
 function relative(ymd) {
   const diff = Math.round((parseYMD(ymd) - today()) / 86400000);
-  if (diff <= 0) return '今日';
-  if (diff === 1) return '明日';
-  if (diff <= 30) return `${diff}日後`;
+  if (diff <= 0) return 'Today';
+  if (diff === 1) return 'Tomorrow';
+  if (diff <= 30) return `In ${diff} days`;
   return fmtDate(ymd);
 }
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
@@ -468,10 +514,10 @@ function render() {
   const total = active.reduce((s, i) => s + monthly(i), 0);
   $('#heroAmount').textContent = Math.round(total).toLocaleString('ja-JP');
   $('#heroYear').textContent = yen(total * 12);
-  $('#heroCount').textContent = paused ? `${active.length}件（停止中 ${paused}件）` : `${active.length}件`;
-  $('#count').textContent = items.length ? `${items.length}件` : '';
+  $('#heroCount').textContent = paused ? `${active.length} active · ${paused} paused` : `${active.length} active`;
+  $('#count').textContent = items.length ? String(items.length) : '';
 
-  /* 内訳の帯: 月額換算の大きい順に、青の濃い方から */
+  /* 内訳の帯: 月額換算の大きい順に、鮮やかな方から */
   const ranked = [...active].sort((a, b) => monthly(b) - monthly(a) || a.name.localeCompare(b.name, 'ja'));
   const colorOf = new Map();
   ranked.forEach((it, i) => colorOf.set(it.id, i < 7 ? `c${i + 1}` : 'c-other'));
@@ -480,7 +526,7 @@ function render() {
   if (ranked.length && total > 0) {
     const top = ranked.slice(0, 7), rest = ranked.slice(7);
     const parts = top.map(it => ({ label: it.name, value: monthly(it), cls: colorOf.get(it.id) }));
-    if (rest.length) parts.push({ label: `ほか${rest.length}件`, value: rest.reduce((s, i) => s + monthly(i), 0), cls: 'c-other' });
+    if (rest.length) parts.push({ label: `+${rest.length} more`, value: rest.reduce((s, i) => s + monthly(i), 0), cls: 'c-other' });
     for (const p of parts) {
       const seg = el('span', { class: `seg ${p.cls}`, title: `${p.label} ${yen(p.value)}／月（${Math.round(p.value / total * 100)}%）` });
       seg.style.flexGrow = String(p.value);
@@ -488,7 +534,7 @@ function render() {
     }
     bandEl.setAttribute('aria-label', '月額換算の内訳: ' + parts.map(p => `${p.label} ${Math.round(p.value / total * 100)}%`).join('、'));
     const keys = parts.slice(0, 4);
-    if (parts.length > 4) keys.push({ label: `ほか${parts.length - 4}件`, value: parts.slice(4).reduce((s, p) => s + p.value, 0), cls: 'c-other' });
+    if (parts.length > 4) keys.push({ label: `+${parts.length - 4} more`, value: parts.slice(4).reduce((s, p) => s + p.value, 0), cls: 'c-other' });
     for (const k of keys) {
       legendEl.append(el('li', { class: 'key' }, [el('span', { class: `sw ${k.cls}`, 'aria-hidden': 'true' }), el('span', { text: k.label }), el('span', { class: 'pct', text: `${Math.round(k.value / total * 100)}%` })]));
     }
@@ -518,15 +564,16 @@ function render() {
   });
   rowsEl.replaceChildren();
   for (const it of sorted) {
-    const sub = [el('span', { text: CYCLES[it.cycle].label }), el('span', { text: `次回 ${fmtDate(it.nextDate)}` })];
+    const sub = [el('span', { text: CYCLES[it.cycle].label }), el('span', { text: `Next ${fmtDate(it.nextDate)}` })];
     if (it.memo) sub.push(el('span', { text: it.memo }));
-    if (it.paused) sub.unshift(el('span', { class: 'tag', text: '停止中' }));
+    if (it.paused) sub.unshift(el('span', { class: 'tag', text: 'Paused' }));
     const amt = el('span', { class: 'amt', text: yen(it.amount) });
-    if (it.cycle !== 'month') amt.append(el('small', { text: `月あたり ${yen(monthly(it))}` }));
+    if (it.cycle !== 'month') amt.append(el('small', { text: `${yen(monthly(it))} / mo` }));
     const row = el('button', { type: 'button', class: 'row' + (it.paused ? ' is-paused' : ''), 'data-id': it.id, 'aria-label': `${it.name} を編集` }, [
       el('span', { class: `sw ${it.paused ? 'c-other' : colorOf.get(it.id)}`, 'aria-hidden': 'true' }),
       el('span', {}, [el('span', { class: 'name', text: it.name }), el('span', { class: 'sub' }, sub)]),
       amt,
+      el('span', { class: 'chev', 'aria-hidden': 'true' }),
     ]);
     rowsEl.append(el('li', {}, row));
   }
@@ -551,7 +598,7 @@ function setMsg(key, text, isError) {
 function resetMsgs() { setMsg('name', HELP.name, false); setMsg('amount', HELP.amount, false); setMsg('next', HELP.next, false); }
 function openDialog(item) {
   editingId = item ? item.id : null;
-  $('#dlgTitle').textContent = item ? 'サブスクを編集' : 'サブスクを追加';
+  $('#dlgTitle').textContent = item ? 'Edit subscription' : 'New subscription';
   fName.value = item ? item.name : '';
   fAmount.value = item ? String(item.amount) : '';
   fCycle.value = item ? item.cycle : 'month';
@@ -599,7 +646,7 @@ $('#btnDeleteYes').addEventListener('click', () => {
   if (idx < 0) { closeDialog(); return; }
   const [removed] = items.splice(idx, 1);
   save(); render(); closeDialog();
-  toast(`「${removed.name}」を削除しました`, '元に戻す', () => { items.splice(Math.min(idx, items.length), 0, removed); save(); render(); toast(`「${removed.name}」を戻しました`); });
+  toast(`「${removed.name}」を削除しました`, 'Undo', () => { items.splice(Math.min(idx, items.length), 0, removed); save(); render(); toast(`「${removed.name}」を戻しました`); });
 });
 $('#btnAdd').addEventListener('click', () => openDialog(null));
 rowsEl.addEventListener('click', e => {
@@ -648,7 +695,7 @@ fileEl.addEventListener('change', async () => {
   try { parsed = JSON.parse(await f.text()); } catch (e) { parsed = null; }
   const arr = Array.isArray(parsed) ? parsed : (parsed && Array.isArray(parsed.items) ? parsed.items : null);
   const list = arr ? arr.map(normalize).filter(Boolean) : [];
-  if (!list.length) { toast('読み込めませんでした。「バックアップを保存」で作ったJSONファイルを選んでください'); return; }
+  if (!list.length) { toast('読み込めませんでした。「Export JSON」で作ったJSONファイルを選んでください'); return; }
   pendingImport = list;
   $('#impText').textContent = `${list.length}件を読み込みます。今登録されている${items.length}件は、この内容に置き換わります。`;
   dlgImport.showModal(); $('#btnImportNo').focus();
