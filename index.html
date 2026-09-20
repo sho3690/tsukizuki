@@ -216,18 +216,15 @@ main{padding-block:var(--space-6) var(--space-12)}
 .empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm);max-width:34em}
 .empty .btn{margin-top:var(--space-5)}
 
-/* ── フッター（バックアップは折りたたんでおく） ── */
-.foot{margin-top:var(--space-12);padding-top:var(--space-6);border-top:1px solid var(--color-border)}
-.foot .note{font-size:var(--font-size-sm);color:var(--color-text-secondary);max-width:44em}
-.foot .note .eyebrow{display:inline-block;margin-right:var(--space-2);color:var(--color-primary)}
-.backup{margin-top:var(--space-2)}
-.backup summary{display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--color-text-muted);cursor:pointer;list-style:none;border-radius:var(--radius-sm);user-select:none;transition:color var(--dur-short) var(--ease-standard)}
-.backup summary::-webkit-details-marker{display:none}
-.backup summary::before{content:"";flex:none;width:.5em;height:.5em;margin-right:2px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(-45deg);transition:transform var(--dur-short) var(--ease-standard)}
-.backup[open] summary::before{transform:translateY(-2px) rotate(45deg)}
-.backup summary:hover{color:var(--color-text-primary)}
-.backup .note{margin-bottom:var(--space-3)}
-.foot-actions{display:flex;gap:var(--space-2);flex-wrap:wrap}
+/* ── 設定シート（バックアップはここにまとめる） ── */
+.head-actions{display:flex;align-items:center;gap:var(--space-2);flex:none}
+.btn-icon{width:44px;padding:0;background:var(--color-surface);color:var(--color-text-secondary);border-color:var(--color-border-strong);box-shadow:var(--shadow-sm)}
+.btn-icon:hover{border-color:var(--color-primary);color:var(--color-primary)}
+.btn-icon .ico{width:20px;height:20px}
+.set-group{padding:var(--space-4) var(--space-5) var(--space-5);border:1px solid var(--color-border);border-radius:var(--radius-lg);background:var(--color-surface-muted)}
+.set-group + .set-group{margin-top:var(--space-3)}
+.set-desc{margin-top:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary)}
+.set-actions{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-4)}
 
 /* ── 追加・編集シート ── */
 .sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:92dvh;margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:0 -12px 48px -12px rgba(0,0,0,.35);overflow:auto}
@@ -289,7 +286,10 @@ select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-righ
       <img class="mark" src="icons/icon.svg" alt="" width="36" height="36">
       <div><h1>月々</h1><span class="sub">Subscription Ledger</span></div>
     </div>
-    <button type="button" class="btn btn-primary" id="btnAdd"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</button>
+    <div class="head-actions">
+      <button type="button" class="btn btn-icon" id="btnSettings" aria-label="Settings" title="Settings"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+      <button type="button" class="btn btn-primary" id="btnAdd"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</button>
+    </div>
   </div>
 </header>
 
@@ -330,18 +330,6 @@ select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-righ
     </section>
   </div>
 
-  <footer class="foot">
-    <p class="note"><span class="eyebrow">Local only</span>登録した内容は、この端末のブラウザの中にだけ保存されます。外部には送信されません。</p>
-    <details class="backup" id="backup">
-      <summary>Backup</summary>
-      <p class="note">機種変更のときは、バックアップを保存して新しい端末で読み込んでください。</p>
-      <div class="foot-actions">
-        <button type="button" class="btn btn-secondary btn-sm" id="btnExport"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>Export JSON</button>
-        <button type="button" class="btn btn-secondary btn-sm" id="btnImport"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m0 0 4 4m-4-4-4 4M5 19h14"/></svg>Import JSON</button>
-        <input type="file" id="fileImport" accept=".json,application/json" hidden>
-      </div>
-    </details>
-  </footer>
 </main>
 
 <dialog class="sheet" id="dlg" aria-labelledby="dlgTitle">
@@ -396,6 +384,25 @@ select.input{cursor:pointer;appearance:none;-webkit-appearance:none;padding-righ
       </div>
     </div>
   </form>
+</dialog>
+
+<dialog class="sheet" id="dlgSettings" aria-labelledby="setTitle">
+  <div class="sheet-body">
+    <div class="sheet-handle" aria-hidden="true"></div>
+    <h2 id="setTitle">Settings</h2>
+    <section class="set-group" aria-labelledby="setBackup">
+      <h3 class="eyebrow" id="setBackup">Backup</h3>
+      <p class="set-desc">機種変更のときは、バックアップを保存して新しい端末で読み込んでください。</p>
+      <div class="set-actions">
+        <button type="button" class="btn btn-secondary" id="btnExport"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0 4-4m-4 4-4-4M5 19h14"/></svg>Export JSON</button>
+        <button type="button" class="btn btn-secondary" id="btnImport"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4m0 0 4 4m-4-4-4 4M5 19h14"/></svg>Import JSON</button>
+        <input type="file" id="fileImport" accept=".json,application/json" hidden>
+      </div>
+    </section>
+    <div class="actions">
+      <button type="button" class="btn btn-tertiary" id="btnSettingsClose">Close</button>
+    </div>
+  </div>
 </dialog>
 
 <dialog class="sheet" id="dlgImport" aria-labelledby="impTitle">
@@ -676,7 +683,12 @@ $('#btnSample').addEventListener('click', () => {
 });
 function addDays(ymd, n) { const dt = parseYMD(ymd); dt.setDate(dt.getDate() + n); return toYMD(dt); }
 
-/* ── バックアップ ── */
+/* ── 設定 ── */
+const dlgSettings = $('#dlgSettings');
+$('#btnSettings').addEventListener('click', () => dlgSettings.showModal());
+$('#btnSettingsClose').addEventListener('click', () => dlgSettings.close());
+
+/* ── バックアップ（設定シートの中。通知が見えるようにシートは閉じてから出す） ── */
 $('#btnExport').addEventListener('click', () => {
   const payload = { app: 'tsukizuki', version: 1, exportedAt: new Date().toISOString(), items };
   const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
@@ -684,6 +696,7 @@ $('#btnExport').addEventListener('click', () => {
   const a = el('a', { href: url, download: `tsukizuki-${toYMD(today())}.json` });
   document.body.append(a); a.click(); a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+  dlgSettings.close();
   toast(`${items.length}件をバックアップとして保存しました`);
 });
 const fileEl = $('#fileImport'), dlgImport = $('#dlgImport');
@@ -691,6 +704,7 @@ let pendingImport = null;
 $('#btnImport').addEventListener('click', () => { fileEl.value = ''; fileEl.click(); });
 fileEl.addEventListener('change', async () => {
   const f = fileEl.files && fileEl.files[0]; if (!f) return;
+  dlgSettings.close();
   let parsed = null;
   try { parsed = JSON.parse(await f.text()); } catch (e) { parsed = null; }
   const arr = Array.isArray(parsed) ? parsed : (parsed && Array.isArray(parsed.items) ? parsed.items : null);
