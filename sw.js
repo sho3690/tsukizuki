@@ -1,7 +1,7 @@
-// 月々 — オフラインでも開けるようにする小さな仕組み。
+// Monthly — オフラインでも開けるようにする小さな仕組み。
 // 画面はまずネットワークから取り、つながらないときだけ保存済みのものを出す。
-const VERSION = 'tsukizuki-v1';
-const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png'];
+const VERSION = 'tsukizuki-v2';
+const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(VERSION).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
