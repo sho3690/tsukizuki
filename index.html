@@ -110,7 +110,7 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}
 .wrap{max-width:var(--width-content);margin-inline:auto;padding-inline:var(--space-4)}
 @media (min-width:600px){.wrap{padding-inline:var(--space-6)}}
-.eyebrow{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--color-text-muted)}
+.eyebrow{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--color-text-secondary)}
 .ico{width:18px;height:18px;flex:none}
 
 /* ── ヘッダー（すりガラス。スクロール後だけ下線） ── */
@@ -120,7 +120,7 @@ button{font:inherit;color:inherit}
 .brand{display:flex;align-items:center;gap:var(--space-3);min-width:0}
 .brand .mark{width:36px;height:36px;border-radius:10px;box-shadow:var(--shadow-sm);flex:none}
 .brand h1{font-family:var(--font-display);font-size:var(--font-size-xl);font-weight:700;letter-spacing:-.02em;line-height:1}
-.brand .sub{display:block;margin-top:3px;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:500;letter-spacing:.01em;color:var(--color-text-muted);line-height:1.2;white-space:nowrap}
+.brand .sub{display:block;margin-top:3px;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:500;letter-spacing:.01em;color:var(--color-text-secondary);line-height:1.2;white-space:nowrap}
 .head-actions{display:flex;align-items:center;gap:var(--space-2);flex:none}
 
 /* ── ボタン（ピル型） ── */
@@ -140,7 +140,7 @@ button{font:inherit;color:inherit}
 .btn-icon{width:44px;padding:0;background:var(--color-surface);color:var(--color-text-secondary);border-color:var(--color-border-strong);box-shadow:var(--shadow-sm)}
 .btn-icon:hover{border-color:var(--color-primary);color:var(--color-primary)}
 .btn-icon .ico{width:20px;height:20px}
-.btn-sm{min-height:38px;padding:0 var(--space-4);font-size:var(--font-size-sm)}
+.btn-sm{min-height:44px;padding:0 var(--space-4);font-size:var(--font-size-sm)}
 .btn-sm .ico{width:16px;height:16px}
 .btn:disabled,.btn[aria-disabled="true"]{background:var(--color-surface-muted);color:var(--color-text-muted);border-color:var(--color-border-strong);cursor:not-allowed;transform:none;box-shadow:none;filter:none}
 
@@ -161,7 +161,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .hero::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.06)}
 .hero-top{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}
 .hero .eyebrow{color:rgba(255,255,255,.72)}
-.wordmark{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+.wordmark{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.72);font-variant-numeric:tabular-nums}
 .hero-grid{display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--space-3) var(--space-6);margin-top:var(--space-5)}
 .fig{min-width:0}
 .fig-lbl{display:block;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
@@ -202,7 +202,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .card .memo{font-size:var(--font-size-sm);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-foot{display:grid;gap:var(--space-1);margin-top:auto}
 .card .amt{display:flex;align-items:baseline;gap:.3em;font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
-.card .amt .yen{font-size:.6em;font-weight:500;color:var(--color-text-muted)}
+.card .amt .yen{font-size:.6em;font-weight:500;color:var(--color-text-secondary)}
 .card .amt .unit{font-size:var(--font-size-xs);font-weight:600;letter-spacing:.02em;color:var(--color-text-secondary)}
 .card .per{font-size:var(--font-size-xs);font-weight:500;color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
 .card.is-paused .name,.card.is-paused .amt,.card.is-paused .amt .unit{color:var(--color-text-muted)}
@@ -224,7 +224,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .tile{min-width:0;padding:var(--space-4) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
 .tile .lbl{display:block;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary)}
 .tile .num{display:flex;align-items:baseline;gap:.3em;margin-top:var(--space-2);font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
-.tile .num .yen{font-size:.6em;font-weight:500;color:var(--color-text-muted)}
+.tile .num .yen{font-size:.6em;font-weight:500;color:var(--color-text-secondary)}
 .tile .num .unit{font-size:var(--font-size-xs);font-weight:600;letter-spacing:.02em;color:var(--color-text-secondary)}
 .tile .sub{display:block;margin-top:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
 .tile .sub + .sub{margin-top:0}
@@ -242,7 +242,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .sheet-grip:active{cursor:grabbing}
 .sheet-handle{width:40px;height:4px;border-radius:2px;background:var(--color-border-strong)}
 @media (min-width:600px){.sheet-grip{display:none}}
-.sheet-close{position:absolute;top:var(--space-6);right:var(--space-4);z-index:2;width:40px;height:40px;min-height:0;padding:0;border:0;border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary)}
+.sheet-close{position:absolute;top:var(--space-5);right:var(--space-4);z-index:2;width:44px;height:44px;min-height:0;padding:0;border:0;border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary)}
 .sheet-close:hover{background:color-mix(in srgb,var(--color-text-primary) 12%,transparent);color:var(--color-text-primary)}
 @media (min-width:600px){.sheet-close{top:var(--space-6);right:var(--space-6)}}
 .sheet h2{font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--space-5);padding-right:52px}
@@ -265,7 +265,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .amount-wrap .prefix{position:absolute;left:var(--space-4);top:50%;transform:translateY(-50%);color:var(--color-text-muted);font-family:var(--font-display);font-weight:600;font-size:var(--font-size-lg);pointer-events:none}
 .input-amount{padding-left:calc(var(--space-4) + 1.1em);min-height:56px;font-family:var(--font-display);font-size:var(--font-size-xl);font-weight:700;font-variant-numeric:tabular-nums}
 .seg{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:4px;background:var(--color-surface-muted);border:1px solid var(--color-border-strong);border-radius:var(--radius-md)}
-.seg-item{position:relative;display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:calc(var(--radius-md) - 4px);font-family:var(--font-display);font-size:.8125rem;font-weight:600;color:var(--color-text-secondary);cursor:pointer;user-select:none;transition:background-color var(--dur-short) var(--ease-standard),color var(--dur-short) var(--ease-standard),box-shadow var(--dur-short) var(--ease-standard)}
+.seg-item{position:relative;display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:calc(var(--radius-md) - 4px);font-family:var(--font-display);font-size:.8125rem;font-weight:600;color:var(--color-text-secondary);cursor:pointer;user-select:none;transition:background-color var(--dur-short) var(--ease-standard),color var(--dur-short) var(--ease-standard),box-shadow var(--dur-short) var(--ease-standard)}
 .seg-item input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
 .seg-item:hover{color:var(--color-text-primary)}
 .seg-item:has(input:checked){background:var(--color-surface);color:var(--color-primary);box-shadow:var(--shadow-sm)}
@@ -287,8 +287,8 @@ main{padding-block:var(--space-6) var(--space-12)}
 .set-actions{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-top:var(--space-4)}
 
 /* ── 通知 ── */
-.toast{position:fixed;left:50%;bottom:calc(var(--space-6) + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:var(--space-3);max-width:calc(100% - var(--space-8));padding:var(--space-2) var(--space-2) var(--space-2) var(--space-5);background:var(--color-inverse-surface);color:var(--color-inverse-text);border-radius:var(--radius-pill);box-shadow:var(--shadow-md);font-size:var(--font-size-sm);animation:toast-in var(--dur-medium) var(--ease-out)}
-.toast .btn-tertiary{color:var(--color-inverse-link);min-height:36px}
+.toast{position:fixed;left:50%;bottom:calc(var(--space-6) + env(safe-area-inset-bottom));transform:translateX(-50%);z-index:20;display:flex;align-items:center;gap:var(--space-3);width:max-content;max-width:min(calc(100vw - var(--space-8)),560px);padding:var(--space-2) var(--space-2) var(--space-2) var(--space-5);background:var(--color-inverse-surface);color:var(--color-inverse-text);border-radius:var(--radius-pill);box-shadow:var(--shadow-md);font-size:var(--font-size-sm);animation:toast-in var(--dur-medium) var(--ease-out)}
+.toast .btn-tertiary{color:var(--color-inverse-link);min-height:44px}
 .toast .btn-tertiary:hover{background:color-mix(in srgb,var(--color-inverse-text) 8%,transparent);color:var(--color-inverse-link)}
 @keyframes toast-in{from{transform:translate(-50%,12px);opacity:0}to{transform:translate(-50%,0);opacity:1}}
 
@@ -446,7 +446,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 </dialog>
 
 <div class="toast" id="toast" role="status" hidden>
-  <span id="toastText"></span>
+  <span id="toastText" style="flex:1;min-width:0"></span>
   <button type="button" class="btn btn-tertiary" id="toastAction" hidden></button>
 </div>
 
