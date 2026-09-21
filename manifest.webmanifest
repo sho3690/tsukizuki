@@ -1,12 +1,12 @@
 {
-  "name": "Monthly — Subscription Ledger",
-  "short_name": "Monthly",
-  "description": "サブスクの月額と次の支払日を、ひと目で。",
+  "name": "月々 — サブスクの帳簿",
+  "short_name": "月々",
+  "description": "サブスクの月額と年額を、ひと目で。登録内容は端末の中にだけ保存されます。",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f5f6fa",
-  "theme_color": "#f5f6fa",
+  "background_color": "#f8f9fa",
+  "theme_color": "#f8f9fa",
   "lang": "ja",
   "icons": [
     { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
