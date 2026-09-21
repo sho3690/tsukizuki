@@ -129,17 +129,15 @@ button{font:inherit;color:inherit}
 .btn:disabled,.btn[aria-disabled="true"]{background:var(--color-surface-muted);color:var(--color-text-muted);border-color:var(--color-border-strong);cursor:not-allowed}
 
 /* ── 本体レイアウト ── */
-main{padding-block:var(--space-6) var(--space-12)}
-@media (min-width:600px){main{padding-block:var(--space-8) var(--space-16)}}
+main{min-height:calc(100dvh - var(--header-h) - env(safe-area-inset-top));display:grid;align-content:center;padding-block:var(--space-6) var(--space-10)}
+@media (min-width:600px){main{padding-block:var(--space-8)}}
 .layout{display:grid;gap:var(--space-12)}
 .col{display:grid;gap:var(--space-12);min-width:0}
-@media (min-width:840px){
-  .layout{grid-template-columns:minmax(320px,400px) minmax(0,1fr);gap:var(--space-16);align-items:start}
-  .totals{position:sticky;top:calc(var(--header-h) + var(--space-8))}
-}
+@media (min-width:600px){.layout{gap:var(--space-10)}}
 
 /* ── 合計: 月あたり / 年あたり の2ブロック ── */
 .totals{display:grid;gap:var(--space-4)}
+@media (min-width:600px){.totals{grid-template-columns:1fr 1fr}}
 .total{padding:var(--space-6) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
 @media (min-width:600px){.total{padding:var(--space-8) var(--space-6)}}
 .total-top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3)}
@@ -148,6 +146,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .amount{margin-top:var(--space-3);font-size:clamp(2.5rem,12vw,3.5rem);font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:.06em;white-space:nowrap;color:var(--color-primary)}
 .amount .yen{font-size:.55em;font-weight:500}
 .amount-year{font-size:clamp(2rem,9.5vw,2.75rem);color:var(--color-text-primary)}
+@media (min-width:600px){.amount{font-size:clamp(2.25rem,5.5vw,3.5rem)}.amount-year{font-size:clamp(1.75rem,4.2vw,2.75rem)}}
 .meta{margin-top:var(--space-3);color:var(--color-text-secondary);font-size:var(--font-size-md);font-variant-numeric:tabular-nums}
 
 /* ── 区画の見出し ── */
@@ -167,7 +166,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .track{display:flex;gap:var(--space-3);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;margin-inline:calc(var(--space-4) * -1);padding:3px var(--space-4) var(--space-2);scroll-padding-inline:var(--space-4)}
 .track::-webkit-scrollbar{display:none}
 @media (min-width:600px){.track{margin-inline:calc(var(--space-6) * -1);padding-inline:var(--space-6);scroll-padding-inline:var(--space-6)}}
-@media (min-width:840px){.track{margin-inline:-4px;padding-inline:4px;scroll-padding-inline:4px}}
+@media (min-width:840px){.track{margin-inline:-4px;padding-inline:4px;scroll-padding-inline:4px}.card{width:280px}}
 .track > li{flex:none;display:flex;scroll-snap-align:start}
 .card{position:relative;display:flex;flex-direction:column;gap:var(--space-4);width:min(78vw,320px);min-height:224px;padding:var(--space-6) var(--space-5);margin:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);text-align:left;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard),background-color var(--dur-short) var(--ease-standard)}
 .card:hover{border-color:var(--color-primary);background:color-mix(in srgb,var(--color-surface) 96%,var(--color-text-primary))}
