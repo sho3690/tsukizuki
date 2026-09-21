@@ -9,7 +9,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Monthly">
-<meta name="description" content="サブスクの月額と次の支払日を、ひと目で。登録内容は端末の中にだけ保存されます。">
+<meta name="description" content="サブスクの月額を、ひと目で。登録内容は端末の中にだけ保存されます。">
 <title>Monthly — Subscription Ledger</title>
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/icon-180.png">
@@ -166,37 +166,50 @@ main{padding-block:var(--space-6) var(--space-12)}
 .meta{margin-top:var(--space-4);color:rgba(255,255,255,.72);font-size:var(--font-size-sm);display:flex;gap:var(--space-4);flex-wrap:wrap;font-variant-numeric:tabular-nums;font-family:var(--font-display);font-weight:500}
 .meta b{font-weight:700;color:#ffffff}
 
-/* ── 帳簿（一覧） ── */
-.ledger{background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);padding:var(--space-5) var(--space-3) var(--space-3);box-shadow:var(--shadow-md)}
-@media (min-width:600px){.ledger{padding:var(--space-6) var(--space-5) var(--space-4)}}
-.ledger-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);flex-wrap:wrap;margin-bottom:var(--space-3);padding-inline:var(--space-2)}
+/* ── 帳簿（横にスライドするカード） ── */
+.ledger{min-width:0}
+.ledger-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-3);padding-inline:var(--space-1)}
 .ledger-head h2{display:inline-flex;align-items:center;gap:var(--space-2)}
+.ledger-tools{display:flex;align-items:center;gap:var(--space-2)}
 .count{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:0;min-width:22px;height:22px;padding:0 7px;border-radius:var(--radius-pill);background:var(--color-primary-soft);color:var(--color-primary);display:inline-flex;align-items:center;justify-content:center}
 .count:empty{display:none}
 .sort{display:inline-flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-size:var(--font-size-sm);font-weight:600;color:var(--color-text-secondary)}
 .select-wrap{position:relative;display:inline-block}
 .select-wrap::after{content:"";position:absolute;right:15px;top:50%;width:7px;height:7px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none;color:var(--color-text-secondary)}
-.select{appearance:none;-webkit-appearance:none;min-height:40px;padding:0 calc(var(--space-4) + 18px) 0 var(--space-4);border:1px solid var(--color-border-strong);border-radius:var(--radius-pill);background:var(--color-surface);color:var(--color-text-primary);font:inherit;font-size:var(--font-size-sm);font-weight:600;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard)}
+.select{appearance:none;-webkit-appearance:none;min-height:44px;padding:0 calc(var(--space-4) + 18px) 0 var(--space-4);border:1px solid var(--color-border-strong);border-radius:var(--radius-pill);background:var(--color-surface);color:var(--color-text-primary);font:inherit;font-size:var(--font-size-sm);font-weight:600;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard)}
 .select:hover{border-color:var(--color-primary)}
-.rows > li + li{border-top:1px solid var(--color-border)}
-.row{display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;column-gap:var(--space-3);align-items:center;width:100%;min-height:64px;padding:var(--space-3) var(--space-3);margin:0;background:transparent;border:0;border-radius:var(--radius-lg);text-align:left;cursor:pointer;transition:background-color var(--dur-short) var(--ease-standard),transform var(--dur-short) var(--ease-standard)}
-.row:hover{background:var(--color-surface-muted)}
-.row:active{transform:scale(.995)}
-.row:focus-visible{outline-offset:-2px}
+.nav{display:none;gap:var(--space-1)}
+@media (min-width:600px) and (hover:hover){.nav{display:inline-flex}}
+/* カードの列。画面の端まで流れ、次のカードが少し覗く。スクロールバーは進捗バーで代用 */
+.track{display:flex;gap:var(--space-3);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;margin-inline:calc(var(--space-4) * -1);padding:var(--space-2) var(--space-4) var(--space-3);scroll-padding-inline:var(--space-4)}
+.track::-webkit-scrollbar{display:none}
+@media (min-width:600px){.track{margin-inline:calc(var(--space-6) * -1);padding-inline:var(--space-6);scroll-padding-inline:var(--space-6)}}
+@media (min-width:840px){.track{margin-inline:-4px;padding-inline:4px;scroll-padding-inline:4px}}
+.track > li{flex:none;display:flex;scroll-snap-align:start}
+.card{position:relative;display:flex;flex-direction:column;gap:var(--space-4);width:248px;min-height:188px;padding:var(--space-5);margin:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm);text-align:left;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard),transform var(--dur-short) var(--ease-standard)}
+.card:hover{border-color:var(--color-primary);transform:translateY(-2px)}
+.card:active{transform:translateY(0) scale(.98)}
+.card:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}
+.card-top{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
 .avatar{width:40px;height:40px;border-radius:12px;background:var(--color-primary-soft);color:var(--color-primary);font-family:var(--font-display);font-weight:700;font-size:var(--font-size-md);display:flex;align-items:center;justify-content:center;flex:none}
-.row .name{font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.row .sub{display:flex;gap:var(--space-3);flex-wrap:wrap;align-items:center;color:var(--color-text-secondary);font-size:var(--font-size-sm);margin-top:2px}
-.row .amt{text-align:right;font-family:var(--font-display);font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-.row .amt small{display:block;font-size:var(--font-size-xs);font-weight:500;color:var(--color-text-secondary)}
-.chev{width:8px;height:8px;margin-left:var(--space-1);border-right:1.5px solid var(--color-text-muted);border-bottom:1.5px solid var(--color-text-muted);transform:rotate(-45deg);opacity:.55;transition:transform var(--dur-short) var(--ease-standard),opacity var(--dur-short) var(--ease-standard)}
-.row:hover .chev{opacity:1;transform:translateX(2px) rotate(-45deg)}
-.row.is-paused .name,.row.is-paused .amt{color:var(--color-text-muted)}
-.row.is-paused .avatar{background:var(--color-surface-muted);color:var(--color-text-muted)}
-.tag{display:inline-block;font-family:var(--font-display);font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;line-height:1.6;padding:1px var(--space-2);border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary)}
-.empty{padding:var(--space-8) var(--space-2) var(--space-6)}
+.card-body{display:grid;gap:2px;min-width:0}
+.card .name{font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.card .memo{font-size:var(--font-size-sm);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-foot{display:grid;gap:var(--space-1);margin-top:auto}
+.card .amt{display:flex;align-items:baseline;gap:.3em;font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.card .amt .yen{font-size:.6em;font-weight:500;color:var(--color-text-muted)}
+.card .amt .unit{font-size:var(--font-size-xs);font-weight:600;letter-spacing:.02em;color:var(--color-text-secondary)}
+.card .per{font-size:var(--font-size-xs);font-weight:500;color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.card.is-paused .name,.card.is-paused .amt,.card.is-paused .amt .unit{color:var(--color-text-muted)}
+.card.is-paused .avatar{background:var(--color-surface-muted);color:var(--color-text-muted)}
+.tag{display:inline-block;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;line-height:1.6;padding:1px var(--space-2);border-radius:var(--radius-pill);background:var(--color-surface-muted);color:var(--color-text-secondary)}
+.scrollbar{position:relative;height:3px;margin:var(--space-2) var(--space-1) 0;border-radius:2px;background:var(--color-border-strong);overflow:hidden}
+.scrollbar .thumb{position:absolute;top:0;left:0;height:100%;width:25%;border-radius:2px;background:var(--color-primary);will-change:transform}
+.empty{padding:var(--space-6) var(--space-5);background:var(--color-surface);border:1px dashed var(--color-border-strong);border-radius:var(--radius-xl)}
 .empty-title{font-family:var(--font-display);font-size:var(--font-size-xl);font-weight:700;letter-spacing:-.01em}
 .empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm);max-width:34em}
 .empty .btn{margin-top:var(--space-5)}
+@media (prefers-reduced-motion: reduce){.track{scroll-behavior:auto}}
 
 /* ── シート（下から出る画面） ── */
 .sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:min(92dvh,var(--vvh,100dvh));margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:0 -12px 48px -12px rgba(0,0,0,.35);overflow:auto;transform:translateY(calc(var(--drag,0px) - var(--kb,0px)))}
@@ -292,15 +305,21 @@ main{padding-block:var(--space-6) var(--space-12)}
     <section class="ledger" aria-labelledby="hList">
       <div class="ledger-head">
         <h2 class="eyebrow" id="hList">All subscriptions<span class="count" id="count"></span></h2>
-        <label class="sort">Sort
-          <span class="select-wrap"><select class="select" id="sort">
-            <option value="date">Next payment</option>
-            <option value="amount">Amount</option>
-            <option value="name">Name</option>
-          </select></span>
-        </label>
+        <div class="ledger-tools" id="ledgerTools">
+          <label class="sort">Sort
+            <span class="select-wrap"><select class="select" id="sort">
+              <option value="amount">Amount</option>
+              <option value="name">Name</option>
+            </select></span>
+          </label>
+          <div class="nav" id="nav">
+            <button type="button" class="btn btn-icon" id="btnPrev" aria-label="Previous" aria-controls="track"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 5-7 7 7 7"/></svg></button>
+            <button type="button" class="btn btn-icon" id="btnNext" aria-label="Next" aria-controls="track"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 5 7 7-7 7"/></svg></button>
+          </div>
+        </div>
       </div>
-      <ul class="rows" id="rows"></ul>
+      <ul class="track" id="track"></ul>
+      <div class="scrollbar" id="bar" aria-hidden="true" hidden><span class="thumb" id="thumb"></span></div>
       <div class="empty" id="empty" hidden>
         <p class="empty-title">Nothing here yet.</p>
         <p class="hint">右上の「Add」から1件ずつ登録できます。まず様子を見たいときは、サンプルを入れて試せます。</p>
@@ -333,11 +352,6 @@ main{padding-block:var(--space-6) var(--space-12)}
         <label class="seg-item"><input type="radio" name="cycle" value="half"><span>6 months</span></label>
         <label class="seg-item"><input type="radio" name="cycle" value="year"><span>Yearly</span></label>
       </div>
-    </div>
-    <div class="field" id="fldNext">
-      <label for="fNext">Next payment</label>
-      <input class="input" id="fNext" type="date" aria-describedby="msgNext">
-      <p class="msg" id="msgNext">その日を過ぎると、次の支払日に自動で進みます</p>
     </div>
     <div class="field" id="fldMemo" hidden>
       <label for="fMemo">Note</label>
@@ -425,32 +439,10 @@ const el = (tag, attrs = {}, children = []) => {
   return n;
 };
 
-/* ── 日付 ── */
+/* ── 日付（今月の表示とバックアップのファイル名にだけ使う） ── */
 const pad = n => String(n).padStart(2, '0');
 const toYMD = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
-const parseYMD = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
 const today = () => { const d = new Date(); return new Date(d.getFullYear(), d.getMonth(), d.getDate()); };
-const daysInMonth = (y, m0) => new Date(y, m0 + 1, 0).getDate();
-const isYMD = s => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && !isNaN(parseYMD(s).getTime());
-function addMonths(ymd, n, anchorDay) {
-  const d = parseYMD(ymd);
-  const total = d.getMonth() + n;
-  const ty = d.getFullYear() + Math.floor(total / 12);
-  const tm = ((total % 12) + 12) % 12;
-  const day = Math.min(anchorDay || d.getDate(), daysInMonth(ty, tm));
-  return toYMD(new Date(ty, tm, day));
-}
-function rollForward(item) {
-  const t = toYMD(today());
-  let guard = 0, moved = false;
-  while (item.nextDate < t && guard++ < 1200) { item.nextDate = addMonths(item.nextDate, CYCLES[item.cycle].months, item.day); moved = true; }
-  return moved;
-}
-function fmtDate(ymd) {
-  const d = parseYMD(ymd);
-  const y = d.getFullYear() !== today().getFullYear() ? `${d.getFullYear()}/` : '';
-  return `${y}${d.getMonth() + 1}/${d.getDate()}`;
-}
 const yen = n => '¥' + Math.round(n).toLocaleString('ja-JP');
 const monthly = it => it.amount / CYCLES[it.cycle].months;
 
@@ -461,10 +453,8 @@ function normalize(o) {
   const name = String(o.name ?? '').trim().slice(0, 60);
   const amount = Math.round(Number(o.amount));
   const cycle = CYCLES[o.cycle] ? o.cycle : 'month';
-  const nextDate = isYMD(o.nextDate) ? o.nextDate : toYMD(today());
   if (!name || !(amount > 0) || amount > 99999999) return null;
-  const day = Number(o.day) >= 1 && Number(o.day) <= 31 ? Number(o.day) : parseYMD(nextDate).getDate();
-  return { id: String(o.id || uid()), name, amount, cycle, nextDate, day, memo: String(o.memo ?? '').trim().slice(0, 200), paused: !!o.paused };
+  return { id: String(o.id || uid()), name, amount, cycle, memo: String(o.memo ?? '').trim().slice(0, 200), paused: !!o.paused };
 }
 function load() {
   try {
@@ -478,17 +468,14 @@ function save() {
   try { localStorage.setItem(KEY, JSON.stringify(items)); }
   catch (e) { toast('保存できませんでした。ブラウザの保存領域がいっぱいか、プライベートモードの可能性があります。'); }
 }
-let sortMode = (() => { try { return localStorage.getItem(SORT_KEY) || 'date'; } catch (e) { return 'date'; } })();
-if (!['date', 'amount', 'name'].includes(sortMode)) sortMode = 'date';
+let sortMode = (() => { try { return localStorage.getItem(SORT_KEY) || 'amount'; } catch (e) { return 'amount'; } })();
+if (!['amount', 'name'].includes(sortMode)) sortMode = 'amount';
 
 /* ── 描画 ── */
-const rowsEl = $('#rows'), emptyEl = $('#empty');
+const track = $('#track'), emptyEl = $('#empty');
 const initial = name => (Array.from(name.trim())[0] || '?').toUpperCase();
+const UNIT = { month: '/ mo', quarter: '/ 3 mo', half: '/ 6 mo', year: '/ yr' };
 function render() {
-  let moved = false;
-  for (const it of items) if (rollForward(it)) moved = true;
-  if (moved) save();
-
   const active = items.filter(i => !i.paused);
   const paused = items.length - active.length;
   const total = active.reduce((s, i) => s + monthly(i), 0);
@@ -498,31 +485,65 @@ function render() {
   $('#heroCount').textContent = paused ? `${active.length} active · ${paused} paused` : `${active.length} active`;
   $('#count').textContent = items.length ? String(items.length) : '';
 
-  /* 一覧 */
+  /* カードの列。一時停止中は最後に回す */
   const sorted = [...items].sort((a, b) => {
     if (a.paused !== b.paused) return a.paused ? 1 : -1;
-    if (sortMode === 'amount') return monthly(b) - monthly(a) || a.name.localeCompare(b.name, 'ja');
     if (sortMode === 'name') return a.name.localeCompare(b.name, 'ja');
-    return a.nextDate.localeCompare(b.nextDate) || a.name.localeCompare(b.name, 'ja');
+    return monthly(b) - monthly(a) || a.name.localeCompare(b.name, 'ja');
   });
-  rowsEl.replaceChildren();
+  track.replaceChildren();
   for (const it of sorted) {
-    const sub = [el('span', { text: CYCLES[it.cycle].label }), el('span', { text: `Next ${fmtDate(it.nextDate)}` })];
-    if (it.memo) sub.push(el('span', { text: it.memo }));
-    if (it.paused) sub.unshift(el('span', { class: 'tag', text: 'Paused' }));
-    const amt = el('span', { class: 'amt', text: yen(it.amount) });
-    if (it.cycle !== 'month') amt.append(el('small', { text: `${yen(monthly(it))} / mo` }));
-    const row = el('button', { type: 'button', class: 'row' + (it.paused ? ' is-paused' : ''), 'data-id': it.id, 'aria-label': `${it.name} を編集` }, [
-      el('span', { class: 'avatar', 'aria-hidden': 'true', text: initial(it.name) }),
-      el('span', {}, [el('span', { class: 'name', text: it.name }), el('span', { class: 'sub' }, sub)]),
-      amt,
-      el('span', { class: 'chev', 'aria-hidden': 'true' }),
+    const amt = el('span', { class: 'amt' }, [
+      el('span', { class: 'yen', 'aria-hidden': 'true', text: '¥' }),
+      el('span', { text: Math.round(it.amount).toLocaleString('ja-JP') }),
+      el('span', { class: 'sr', text: '円' }),
+      el('span', { class: 'unit', text: UNIT[it.cycle] }),
     ]);
-    rowsEl.append(el('li', {}, row));
+    const foot = [amt];
+    if (it.cycle !== 'month') foot.push(el('span', { class: 'per', text: `≈ ${yen(monthly(it))} / mo` }));
+    const card = el('button', { type: 'button', class: 'card' + (it.paused ? ' is-paused' : ''), 'data-id': it.id }, [
+      el('span', { class: 'card-top' }, [
+        el('span', { class: 'avatar', 'aria-hidden': 'true', text: initial(it.name) }),
+        el('span', { class: 'tag', text: it.paused ? 'Paused' : CYCLES[it.cycle].label }),
+      ]),
+      el('span', { class: 'card-body' }, [el('span', { class: 'name', text: it.name }), it.memo ? el('span', { class: 'memo', text: it.memo }) : null]),
+      el('span', { class: 'card-foot' }, foot),
+      el('span', { class: 'sr', text: '（押すと編集）' }),
+    ]);
+    track.append(el('li', {}, card));
   }
   emptyEl.hidden = items.length > 0;
-  $('.ledger-head .sort').hidden = items.length === 0;
+  $('#ledgerTools').hidden = items.length === 0;
+  syncTrack();
 }
+
+/* ── 横スライド: 進捗バーと送りボタン（スクロール位置に追従） ── */
+const bar = $('#bar'), thumb = $('#thumb'), nav = $('#nav'), btnPrev = $('#btnPrev'), btnNext = $('#btnNext');
+const reduceMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function syncTrack() {
+  const max = track.scrollWidth - track.clientWidth;
+  const can = max > 1;
+  bar.hidden = !can; nav.hidden = !can;
+  if (!can) return;
+  const w = Math.max(track.clientWidth / track.scrollWidth, .12) * bar.clientWidth;
+  thumb.style.width = `${Math.round(w)}px`;
+  thumb.style.transform = `translateX(${Math.round((track.scrollLeft / max) * (bar.clientWidth - w))}px)`;
+  btnPrev.disabled = track.scrollLeft <= 1;
+  btnNext.disabled = track.scrollLeft >= max - 1;
+}
+let syncRaf = 0;
+const queueSync = () => { if (!syncRaf) syncRaf = requestAnimationFrame(() => { syncRaf = 0; syncTrack(); }); };
+track.addEventListener('scroll', queueSync, { passive: true });
+window.addEventListener('resize', queueSync);
+function slide(dir) {
+  const first = track.querySelector('li');
+  if (!first) return;
+  const step = first.getBoundingClientRect().width + (parseFloat(getComputedStyle(track).columnGap) || 12);
+  const n = Math.max(1, Math.floor(track.clientWidth / step));
+  track.scrollBy({ left: dir * n * step, behavior: reduceMotion() ? 'auto' : 'smooth' });
+}
+btnPrev.addEventListener('click', () => slide(-1));
+btnNext.addEventListener('click', () => slide(1));
 
 /* ── シート共通: ×ボタン、背景タップ、つまみの下スワイプで閉じる ── */
 for (const d of document.querySelectorAll('dialog.sheet')) {
@@ -552,7 +573,7 @@ if (vv) {
 
 /* ── 追加・編集 ── */
 const dlg = $('#dlg'), form = $('#form');
-const fName = $('#fName'), fAmount = $('#fAmount'), fNext = $('#fNext'), fMemo = $('#fMemo'), fPaused = $('#fPaused');
+const fName = $('#fName'), fAmount = $('#fAmount'), fMemo = $('#fMemo'), fPaused = $('#fPaused');
 const fldMemo = $('#fldMemo'), btnNote = $('#btnNote'), pausedRow = $('#pausedRow'), btnDelete = $('#btnDelete');
 const confirmBox = $('#confirm'), actionsBox = $('#actions');
 let editingId = null;
@@ -560,7 +581,7 @@ const getCycle = () => form.querySelector('input[name="cycle"]:checked').value;
 const setCycle = v => { form.querySelector(`input[name="cycle"][value="${v}"]`).checked = true; };
 const toHalf = s => s.replace(/[０-９]/g, c => String.fromCharCode(c.charCodeAt(0) - 0xFEE0));
 const parseAmount = s => { const raw = toHalf(s).replace(/[¥￥,，\s円]/g, ''); return /^\d+$/.test(raw) ? Number(raw) : NaN; };
-const HELP = { name: '', amount: '税込の金額を数字で入力', next: 'その日を過ぎると、次の支払日に自動で進みます' };
+const HELP = { name: '', amount: '税込の金額を数字で入力' };
 function setMsg(key, text, isError) {
   const fld = $('#fld' + key[0].toUpperCase() + key.slice(1)), msg = $('#msg' + key[0].toUpperCase() + key.slice(1));
   fld.classList.toggle('is-error', !!isError);
@@ -568,14 +589,13 @@ function setMsg(key, text, isError) {
   const input = fld.querySelector('.input');
   if (isError) input.setAttribute('aria-invalid', 'true'); else input.removeAttribute('aria-invalid');
 }
-function resetMsgs() { setMsg('name', HELP.name, false); setMsg('amount', HELP.amount, false); setMsg('next', HELP.next, false); }
+function resetMsgs() { setMsg('name', HELP.name, false); setMsg('amount', HELP.amount, false); }
 function openDialog(item) {
   editingId = item ? item.id : null;
   $('#dlgTitle').textContent = item ? 'Edit subscription' : 'New subscription';
   fName.value = item ? item.name : '';
   fAmount.value = item ? item.amount.toLocaleString('ja-JP') : '';
   setCycle(item ? item.cycle : 'month');
-  fNext.value = item ? item.nextDate : toYMD(today());
   fMemo.value = item ? item.memo : '';
   const hasMemo = !!(item && item.memo);
   fldMemo.hidden = !hasMemo; btnNote.hidden = hasMemo;
@@ -596,9 +616,8 @@ form.addEventListener('submit', e => {
   if (!name) { setMsg('name', 'サービス名を入力してください（例: Netflix）', true); firstBad = firstBad || fName; }
   const amount = parseAmount(fAmount.value);
   if (!(amount >= 1) || amount > 99999999) { setMsg('amount', '金額は1以上の整数で入力してください（例: 1590）', true); firstBad = firstBad || fAmount; }
-  if (!isYMD(fNext.value)) { setMsg('next', '次回の支払日を選んでください', true); firstBad = firstBad || fNext; }
   if (firstBad) { firstBad.focus(); return; }
-  const data = { name, amount, cycle: getCycle(), nextDate: fNext.value, day: parseYMD(fNext.value).getDate(), memo: fldMemo.hidden ? '' : fMemo.value, paused: fPaused.getAttribute('aria-checked') === 'true' };
+  const data = { name, amount, cycle: getCycle(), memo: fldMemo.hidden ? '' : fMemo.value, paused: fPaused.getAttribute('aria-checked') === 'true' };
   if (editingId) {
     const idx = items.findIndex(i => i.id === editingId);
     if (idx >= 0) items[idx] = normalize({ ...items[idx], ...data });
@@ -628,8 +647,8 @@ $('#btnDeleteYes').addEventListener('click', () => {
   toast(`「${removed.name}」を削除しました`, 'Undo', () => { items.splice(Math.min(idx, items.length), 0, removed); save(); render(); toast(`「${removed.name}」を戻しました`); });
 });
 $('#btnAdd').addEventListener('click', () => openDialog(null));
-rowsEl.addEventListener('click', e => {
-  const btn = e.target.closest('.row'); if (!btn) return;
+track.addEventListener('click', e => {
+  const btn = e.target.closest('.card'); if (!btn) return;
   const it = items.find(i => i.id === btn.dataset.id); if (it) openDialog(it);
 });
 
@@ -640,20 +659,17 @@ sortEl.addEventListener('change', () => { sortMode = sortEl.value; try { localSt
 
 /* ── サンプル ── */
 $('#btnSample').addEventListener('click', () => {
-  const t = toYMD(today());
-  const d = n => addDays(t, n);
   items = [
-    { name: 'Netflix', amount: 1590, cycle: 'month', nextDate: d(3), memo: 'スタンダード' },
-    { name: 'Spotify', amount: 1080, cycle: 'month', nextDate: d(9) },
-    { name: 'YouTube Premium', amount: 1280, cycle: 'month', nextDate: d(14) },
-    { name: 'iCloud+', amount: 130, cycle: 'month', nextDate: d(1), memo: '50GB' },
-    { name: 'Amazon プライム', amount: 5900, cycle: 'year', nextDate: d(120) },
-    { name: 'Kindle Unlimited', amount: 980, cycle: 'month', nextDate: d(22), paused: true },
+    { name: 'Netflix', amount: 1590, cycle: 'month', memo: 'スタンダード' },
+    { name: 'Spotify', amount: 1080, cycle: 'month' },
+    { name: 'YouTube Premium', amount: 1280, cycle: 'month' },
+    { name: 'iCloud+', amount: 130, cycle: 'month', memo: '50GB' },
+    { name: 'Amazon プライム', amount: 5900, cycle: 'year' },
+    { name: 'Kindle Unlimited', amount: 980, cycle: 'month', paused: true },
   ].map(normalize).filter(Boolean);
   save(); render();
   toast('サンプルを6件入れました。行を押すと編集や削除ができます');
 });
-function addDays(ymd, n) { const dt = parseYMD(ymd); dt.setDate(dt.getDate() + n); return toYMD(dt); }
 
 /* ── 設定 ── */
 const dlgSettings = $('#dlgSettings');
@@ -715,7 +731,7 @@ function hideToast() { clearTimeout(toastTimer); toastEl.hidden = true; if (toas
 const io = new IntersectionObserver(([entry]) => $('#top').classList.toggle('is-stuck', !entry.isIntersecting), { rootMargin: `-${$('#top').offsetHeight + 1}px 0px 0px 0px` });
 io.observe($('#sentinel'));
 
-/* ── 日付が変わったら進める ── */
+/* ── 月が変わったら「SEP 2026」の表示を更新する ── */
 document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
 
 render();
