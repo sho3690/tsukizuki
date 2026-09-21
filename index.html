@@ -148,6 +148,7 @@ button{font:inherit;color:inherit}
 main{padding-block:var(--space-6) var(--space-12)}
 @media (min-width:600px){main{padding-block:var(--space-8) var(--space-16)}}
 .layout{display:grid;gap:var(--space-8)}
+.col{display:grid;gap:var(--space-8);min-width:0}
 @media (min-width:840px){
   .layout{grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:var(--space-12);align-items:start}
   .summary{position:sticky;top:calc(var(--header-h) + var(--space-6))}
@@ -210,6 +211,21 @@ main{padding-block:var(--space-6) var(--space-12)}
 .empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm);max-width:34em}
 .empty .btn{margin-top:var(--space-5)}
 @media (prefers-reduced-motion: reduce){.track{scroll-behavior:auto}}
+
+/* ── ひと目でわかる数字（年間・1日あたり・いちばん大きいもの） ── */
+.glance{min-width:0}
+.glance > .eyebrow{display:block;margin-bottom:var(--space-3);padding-inline:var(--space-1)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+.tile{min-width:0;padding:var(--space-4) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
+.tile-wide{grid-column:1 / -1;display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-2) var(--space-4);flex-wrap:wrap}
+.tile .lbl{display:block;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary)}
+.tile .num{display:flex;align-items:baseline;gap:.3em;margin-top:var(--space-2);font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tile-wide .num{font-size:var(--font-size-3xl)}
+.tile .num .yen{font-size:.6em;font-weight:500;color:var(--color-text-muted)}
+.tile .num .unit{font-size:var(--font-size-xs);font-weight:600;letter-spacing:.02em;color:var(--color-text-secondary)}
+.tile .who{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-top:var(--space-2);font-size:var(--font-size-lg);font-weight:600;line-height:1.3;overflow:hidden;overflow-wrap:anywhere}
+.tile .sub{display:block;margin-top:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.tile-wide .sub{margin-top:0;padding-bottom:2px}
 
 /* ── シート（下から出る画面） ── */
 .sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:min(92dvh,var(--vvh,100dvh));margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:0 -12px 48px -12px rgba(0,0,0,.35);overflow:auto;transform:translateY(calc(var(--drag,0px) - var(--kb,0px)))}
@@ -298,10 +314,11 @@ main{padding-block:var(--space-6) var(--space-12)}
       <div class="hero">
         <div class="hero-top"><h2 class="eyebrow" id="hSummary">Monthly total</h2><span class="wordmark" id="heroMonth"></span></div>
         <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
-        <p class="meta"><span><b id="heroYear">¥0</b> / year</span><span id="heroCount">0 active</span></p>
+        <p class="meta"><span id="heroCount">0 active</span></p>
       </div>
     </section>
 
+    <div class="col">
     <section class="ledger" aria-labelledby="hList">
       <div class="ledger-head">
         <h2 class="eyebrow" id="hList">All subscriptions<span class="count" id="count"></span></h2>
@@ -326,6 +343,30 @@ main{padding-block:var(--space-6) var(--space-12)}
         <button type="button" class="btn btn-secondary" id="btnSample">Load sample data</button>
       </div>
     </section>
+
+    <section class="glance" id="glance" aria-labelledby="hGlance" hidden>
+      <h2 class="eyebrow" id="hGlance">At a glance</h2>
+      <div class="tiles">
+        <div class="tile tile-wide">
+          <div>
+            <span class="lbl">Per year</span>
+            <p class="num"><span class="yen" aria-hidden="true">¥</span><span id="gYear">0</span><span class="sr">円</span><span class="unit">/ year</span></p>
+          </div>
+          <span class="sub" id="gYearSub"></span>
+        </div>
+        <div class="tile">
+          <span class="lbl">Per day</span>
+          <p class="num"><span class="yen" aria-hidden="true">¥</span><span id="gDay">0</span><span class="sr">円</span><span class="unit">/ day</span></p>
+          <span class="sub">÷ 365 days</span>
+        </div>
+        <div class="tile">
+          <span class="lbl">Largest</span>
+          <span class="who" id="gTop">—</span>
+          <span class="sub" id="gTopSub"></span>
+        </div>
+      </div>
+    </section>
+    </div>
   </div>
 </main>
 
@@ -481,7 +522,6 @@ function render() {
   const total = active.reduce((s, i) => s + monthly(i), 0);
   $('#heroMonth').textContent = today().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
   $('#heroAmount').textContent = Math.round(total).toLocaleString('ja-JP');
-  $('#heroYear').textContent = yen(total * 12);
   $('#heroCount').textContent = paused ? `${active.length} active · ${paused} paused` : `${active.length} active`;
   $('#count').textContent = items.length ? String(items.length) : '';
 
@@ -515,6 +555,17 @@ function render() {
   emptyEl.hidden = items.length > 0;
   $('#ledgerTools').hidden = items.length === 0;
   syncTrack();
+
+  /* ひと目でわかる数字 */
+  $('#glance').hidden = items.length === 0;
+  const fmt = n => Math.round(n).toLocaleString('ja-JP');
+  $('#gYear').textContent = fmt(total * 12);
+  $('#gYearSub').textContent = `${yen(total)} / mo × 12`;
+  $('#gDay').textContent = fmt(total * 12 / 365);
+  const top = active.slice().sort((a, b) => monthly(b) - monthly(a))[0];
+  $('#gTop').textContent = top ? top.name : '—';
+  $('#gTop').title = top ? top.name : '';
+  $('#gTopSub').textContent = top ? `${yen(monthly(top))} / mo · ${Math.round(monthly(top) / total * 100)}% of total` : 'Nothing active';
 }
 
 /* ── 横スライド: 進捗バーと送りボタン（スクロール位置に追従） ── */
