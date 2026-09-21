@@ -1,6 +1,6 @@
 // Monthly — オフラインでも開けるようにする小さな仕組み。
 // 画面はまずネットワークから取り、つながらないときだけ保存済みのものを出す。
-const VERSION = 'tsukizuki-v5';
+const VERSION = 'tsukizuki-v6';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icons/icon.svg', './icons/icon-192.png', './icons/icon-512.png', './icons/icon-maskable-512.png'];
 
 self.addEventListener('install', e => {

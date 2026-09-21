@@ -150,7 +150,7 @@ main{padding-block:var(--space-6) var(--space-12)}
 .layout{display:grid;gap:var(--space-8)}
 .col{display:grid;gap:var(--space-8);min-width:0}
 @media (min-width:840px){
-  .layout{grid-template-columns:minmax(300px,360px) minmax(0,1fr);gap:var(--space-12);align-items:start}
+  .layout{grid-template-columns:minmax(320px,400px) minmax(0,1fr);gap:var(--space-12);align-items:start}
   .summary{position:sticky;top:calc(var(--header-h) + var(--space-6))}
 }
 
@@ -162,8 +162,12 @@ main{padding-block:var(--space-6) var(--space-12)}
 .hero-top{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}
 .hero .eyebrow{color:rgba(255,255,255,.72)}
 .wordmark{font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.2em;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
-.amount{margin-top:var(--space-4);font-family:var(--font-display);font-size:clamp(2.75rem,9vw,3.5rem);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:.06em}
+.hero-grid{display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--space-3) var(--space-6);margin-top:var(--space-5)}
+.fig{min-width:0}
+.fig-lbl{display:block;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.72)}
+.amount{margin-top:var(--space-2);font-family:var(--font-display);font-size:clamp(2.25rem,8vw,2.5rem);font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:.06em;white-space:nowrap}
 .amount .yen{font-size:.5em;font-weight:500;color:rgba(255,255,255,.6)}
+.amount-sub{font-size:clamp(1.5rem,5.5vw,1.625rem);margin-top:calc(var(--space-2) + .35em);color:rgba(255,255,255,.92)}
 .meta{margin-top:var(--space-4);color:rgba(255,255,255,.72);font-size:var(--font-size-sm);display:flex;gap:var(--space-4);flex-wrap:wrap;font-variant-numeric:tabular-nums;font-family:var(--font-display);font-weight:500}
 .meta b{font-weight:700;color:#ffffff}
 
@@ -212,20 +216,19 @@ main{padding-block:var(--space-6) var(--space-12)}
 .empty .btn{margin-top:var(--space-5)}
 @media (prefers-reduced-motion: reduce){.track{scroll-behavior:auto}}
 
-/* ── ひと目でわかる数字（年間・1日あたり・いちばん大きいもの） ── */
+/* ── 支払い周期ごとの内訳（Monthly | Yearly を同じ形で並べる。重ならず、足すと合計） ── */
 .glance{min-width:0}
 .glance > .eyebrow{display:block;margin-bottom:var(--space-3);padding-inline:var(--space-1)}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
+.tile:last-child:nth-child(odd){grid-column:1 / -1}
 .tile{min-width:0;padding:var(--space-4) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-xl);box-shadow:var(--shadow-sm)}
-.tile-wide{grid-column:1 / -1;display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-2) var(--space-4);flex-wrap:wrap}
 .tile .lbl{display:block;font-family:var(--font-display);font-size:var(--font-size-xs);font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--color-text-secondary)}
 .tile .num{display:flex;align-items:baseline;gap:.3em;margin-top:var(--space-2);font-family:var(--font-display);font-size:var(--font-size-2xl);font-weight:700;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
-.tile-wide .num{font-size:var(--font-size-3xl)}
 .tile .num .yen{font-size:.6em;font-weight:500;color:var(--color-text-muted)}
 .tile .num .unit{font-size:var(--font-size-xs);font-weight:600;letter-spacing:.02em;color:var(--color-text-secondary)}
-.tile .who{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;margin-top:var(--space-2);font-size:var(--font-size-lg);font-weight:600;line-height:1.3;overflow:hidden;overflow-wrap:anywhere}
 .tile .sub{display:block;margin-top:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
-.tile-wide .sub{margin-top:0;padding-bottom:2px}
+.tile .sub + .sub{margin-top:0}
+.tile.is-empty .num,.tile.is-empty .num .unit{color:var(--color-text-muted)}
 
 /* ── シート（下から出る画面） ── */
 .sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:min(92dvh,var(--vvh,100dvh));margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:0 -12px 48px -12px rgba(0,0,0,.35);overflow:auto;transform:translateY(calc(var(--drag,0px) - var(--kb,0px)))}
@@ -312,8 +315,17 @@ main{padding-block:var(--space-6) var(--space-12)}
   <div class="layout">
     <section class="summary" aria-labelledby="hSummary">
       <div class="hero">
-        <div class="hero-top"><h2 class="eyebrow" id="hSummary">Monthly total</h2><span class="wordmark" id="heroMonth"></span></div>
-        <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
+        <div class="hero-top"><h2 class="eyebrow" id="hSummary">Total</h2><span class="wordmark" id="heroMonth"></span></div>
+        <div class="hero-grid">
+          <div class="fig">
+            <span class="fig-lbl">Per month</span>
+            <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
+          </div>
+          <div class="fig">
+            <span class="fig-lbl">Per year</span>
+            <p class="amount amount-sub"><span class="yen" aria-hidden="true">¥</span><span id="heroYear">0</span><span class="sr">円</span></p>
+          </div>
+        </div>
         <p class="meta"><span id="heroCount">0 active</span></p>
       </div>
     </section>
@@ -345,26 +357,8 @@ main{padding-block:var(--space-6) var(--space-12)}
     </section>
 
     <section class="glance" id="glance" aria-labelledby="hGlance" hidden>
-      <h2 class="eyebrow" id="hGlance">At a glance</h2>
-      <div class="tiles">
-        <div class="tile tile-wide">
-          <div>
-            <span class="lbl">Per year</span>
-            <p class="num"><span class="yen" aria-hidden="true">¥</span><span id="gYear">0</span><span class="sr">円</span><span class="unit">/ year</span></p>
-          </div>
-          <span class="sub" id="gYearSub"></span>
-        </div>
-        <div class="tile">
-          <span class="lbl">Per day</span>
-          <p class="num"><span class="yen" aria-hidden="true">¥</span><span id="gDay">0</span><span class="sr">円</span><span class="unit">/ day</span></p>
-          <span class="sub">÷ 365 days</span>
-        </div>
-        <div class="tile">
-          <span class="lbl">Largest</span>
-          <span class="who" id="gTop">—</span>
-          <span class="sub" id="gTopSub"></span>
-        </div>
-      </div>
+      <h2 class="eyebrow" id="hGlance">By billing cycle</h2>
+      <div class="tiles" id="tiles"></div>
     </section>
     </div>
   </div>
@@ -522,6 +516,7 @@ function render() {
   const total = active.reduce((s, i) => s + monthly(i), 0);
   $('#heroMonth').textContent = today().toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).toUpperCase();
   $('#heroAmount').textContent = Math.round(total).toLocaleString('ja-JP');
+  $('#heroYear').textContent = Math.round(total * 12).toLocaleString('ja-JP');
   $('#heroCount').textContent = paused ? `${active.length} active · ${paused} paused` : `${active.length} active`;
   $('#count').textContent = items.length ? String(items.length) : '';
 
@@ -556,16 +551,29 @@ function render() {
   $('#ledgerTools').hidden = items.length === 0;
   syncTrack();
 
-  /* ひと目でわかる数字 */
+  /* 支払い周期ごとの内訳。Monthly | Yearly を上段に常に並べ、3か月・6か月は登録があるときだけ下段に */
   $('#glance').hidden = items.length === 0;
-  const fmt = n => Math.round(n).toLocaleString('ja-JP');
-  $('#gYear').textContent = fmt(total * 12);
-  $('#gYearSub').textContent = `${yen(total)} / mo × 12`;
-  $('#gDay').textContent = fmt(total * 12 / 365);
-  const top = active.slice().sort((a, b) => monthly(b) - monthly(a))[0];
-  $('#gTop').textContent = top ? top.name : '—';
-  $('#gTop').title = top ? top.name : '';
-  $('#gTopSub').textContent = top ? `${yen(monthly(top))} / mo · ${Math.round(monthly(top) / total * 100)}% of total` : 'Nothing active';
+  const tilesEl = $('#tiles');
+  tilesEl.replaceChildren();
+  for (const c of ['month', 'year', 'quarter', 'half']) {
+    const list = active.filter(i => i.cycle === c);
+    if (!list.length && c !== 'month' && c !== 'year') continue;
+    const billed = list.reduce((s, i) => s + i.amount, 0);
+    const perMo = list.reduce((s, i) => s + monthly(i), 0);
+    const n = list.length;
+    const sub = [el('span', { class: 'sub', text: n ? `${n} subscription${n > 1 ? 's' : ''}` : 'None' })];
+    if (n && c !== 'month') sub.push(el('span', { class: 'sub', text: `≈ ${yen(perMo)} / mo` }));
+    tilesEl.append(el('div', { class: 'tile' + (n ? '' : ' is-empty') }, [
+      el('span', { class: 'lbl', text: CYCLES[c].label }),
+      el('p', { class: 'num' }, [
+        el('span', { class: 'yen', 'aria-hidden': 'true', text: '¥' }),
+        el('span', { text: Math.round(billed).toLocaleString('ja-JP') }),
+        el('span', { class: 'sr', text: '円' }),
+        el('span', { class: 'unit', text: UNIT[c] }),
+      ]),
+      ...sub,
+    ]));
+  }
 }
 
 /* ── 横スライド: 進捗バーと送りボタン（スクロール位置に追従） ── */
