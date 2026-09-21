@@ -129,33 +129,32 @@ button{font:inherit;color:inherit}
 .btn:disabled,.btn[aria-disabled="true"]{background:var(--color-surface-muted);color:var(--color-text-muted);border-color:var(--color-border-strong);cursor:not-allowed}
 
 /* ── 本体レイアウト ── */
-main{padding-block:var(--space-8) var(--space-16)}
+main{padding-block:var(--space-6) var(--space-12)}
+@media (min-width:600px){main{padding-block:var(--space-8) var(--space-16)}}
 .layout{display:grid;gap:var(--space-12)}
 .col{display:grid;gap:var(--space-12);min-width:0}
 @media (min-width:840px){
   .layout{grid-template-columns:minmax(320px,400px) minmax(0,1fr);gap:var(--space-16);align-items:start}
-  .summary{position:sticky;top:calc(var(--header-h) + var(--space-8))}
+  .totals{position:sticky;top:calc(var(--header-h) + var(--space-8))}
 }
 
-/* ── 合計（月あたり | 年あたり） ── */
-.summary{padding:var(--space-6) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
-@media (min-width:600px){.summary{padding:var(--space-8) var(--space-6)}}
-.summary-top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3)}
-.summary h2{font-size:var(--font-size-lg);font-weight:600;line-height:1.3}
-.summary .when{font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums;white-space:nowrap}
-.figs{display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--space-4) var(--space-8);margin-top:var(--space-5)}
-.fig{min-width:0}
-.fig-lbl{display:block;font-size:var(--font-size-sm);font-weight:600;color:var(--color-text-secondary)}
-.amount{margin-top:var(--space-1);font-size:clamp(2.25rem,8vw,2.5rem);font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:.06em;white-space:nowrap;color:var(--color-primary)}
+/* ── 合計: 月あたり / 年あたり の2ブロック ── */
+.totals{display:grid;gap:var(--space-4)}
+.total{padding:var(--space-6) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
+@media (min-width:600px){.total{padding:var(--space-8) var(--space-6)}}
+.total-top{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3)}
+.total h2{font-size:var(--font-size-xl);font-weight:600;line-height:1.3}
+.total .when{font-size:var(--font-size-md);color:var(--color-text-secondary);font-variant-numeric:tabular-nums;white-space:nowrap}
+.amount{margin-top:var(--space-3);font-size:clamp(2.5rem,12vw,3.5rem);font-weight:600;letter-spacing:-.02em;line-height:1.1;font-variant-numeric:tabular-nums;display:flex;align-items:baseline;gap:.06em;white-space:nowrap;color:var(--color-primary)}
 .amount .yen{font-size:.55em;font-weight:500}
-.amount-sub{font-size:clamp(1.375rem,5.5vw,1.5rem);margin-top:calc(var(--space-1) + .3em);color:var(--color-text-primary)}
-.meta{margin-top:var(--space-4);color:var(--color-text-secondary);font-size:var(--font-size-sm);font-variant-numeric:tabular-nums}
+.amount-year{font-size:clamp(2rem,9.5vw,2.75rem);color:var(--color-text-primary)}
+.meta{margin-top:var(--space-3);color:var(--color-text-secondary);font-size:var(--font-size-md);font-variant-numeric:tabular-nums}
 
 /* ── 区画の見出し ── */
 .ledger{min-width:0}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-4)}
-.section-head h2{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--font-size-lg);font-weight:600;line-height:1.3}
-.badge{font-size:var(--font-size-xs);font-weight:600;line-height:1;padding:5px 8px;border-radius:999px;background:var(--color-surface-muted);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.section-head h2{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--font-size-xl);font-weight:600;line-height:1.3}
+.badge{font-size:var(--font-size-sm);font-weight:600;line-height:1;padding:6px 10px;border-radius:999px;background:var(--color-surface-muted);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
 .badge:empty{display:none}
 .tools{display:flex;align-items:center;gap:var(--space-2)}
 .sort{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary)}
@@ -170,41 +169,30 @@ main{padding-block:var(--space-8) var(--space-16)}
 @media (min-width:600px){.track{margin-inline:calc(var(--space-6) * -1);padding-inline:var(--space-6);scroll-padding-inline:var(--space-6)}}
 @media (min-width:840px){.track{margin-inline:-4px;padding-inline:4px;scroll-padding-inline:4px}}
 .track > li{flex:none;display:flex;scroll-snap-align:start}
-.card{position:relative;display:flex;flex-direction:column;gap:var(--space-3);width:248px;min-height:172px;padding:var(--space-5);margin:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);text-align:left;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard),background-color var(--dur-short) var(--ease-standard)}
+.card{position:relative;display:flex;flex-direction:column;gap:var(--space-4);width:min(78vw,320px);min-height:224px;padding:var(--space-6) var(--space-5);margin:0;background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg);text-align:left;cursor:pointer;transition:border-color var(--dur-short) var(--ease-standard),background-color var(--dur-short) var(--ease-standard)}
 .card:hover{border-color:var(--color-primary);background:color-mix(in srgb,var(--color-surface) 96%,var(--color-text-primary))}
 .card:active{background:color-mix(in srgb,var(--color-surface) 92%,var(--color-text-primary))}
 .card:focus-visible{outline:2px solid var(--color-focus-ring);outline-offset:2px}
-.tag{display:inline-block;align-self:flex-start;font-size:var(--font-size-xs);line-height:1.4;padding:2px var(--space-2);border:1px solid var(--color-border-strong);border-radius:999px;color:var(--color-text-secondary)}
+.tag{display:inline-block;align-self:flex-start;font-size:var(--font-size-sm);line-height:1.4;padding:3px var(--space-3);border:1px solid var(--color-border-strong);border-radius:999px;color:var(--color-text-secondary)}
 .card-body{display:grid;gap:2px;min-width:0}
-.card .name{font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
-.card .memo{font-size:var(--font-size-sm);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .name{font-size:var(--font-size-lg);font-weight:600;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.card .memo{font-size:var(--font-size-md);color:var(--color-text-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card-foot{display:grid;gap:2px;margin-top:auto}
 .amt{display:flex;align-items:baseline;gap:.25em;font-size:var(--font-size-2xl);font-weight:600;letter-spacing:-.01em;line-height:1.1;font-variant-numeric:tabular-nums;white-space:nowrap}
 .amt .yen{font-size:.6em;font-weight:500;color:var(--color-text-secondary)}
-.amt .unit{font-size:var(--font-size-sm);font-weight:500;color:var(--color-text-secondary)}
-.card .per{font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
+.amt .unit{font-size:var(--font-size-md);font-weight:500;color:var(--color-text-secondary)}
+.card .amt{font-size:var(--font-size-3xl)}
+.card .per{font-size:var(--font-size-md);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
 .card.is-paused .name,.card.is-paused .amt{color:var(--color-text-secondary)}
 .scrollbar{position:relative;height:3px;margin:var(--space-2) var(--space-1) 0;border-radius:2px;background:var(--color-border);overflow:hidden}
 .scrollbar .thumb{position:absolute;top:0;left:0;height:100%;width:25%;border-radius:2px;background:var(--color-primary);will-change:transform}
 .empty{padding:var(--space-6) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
-.empty-title{font-size:var(--font-size-lg);font-weight:600}
-.empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-sm);max-width:34em}
+.empty-title{font-size:var(--font-size-xl);font-weight:600}
+.empty .hint{margin-top:var(--space-2);color:var(--color-text-secondary);font-size:var(--font-size-md);max-width:34em}
 .empty .btn{margin-top:var(--space-5)}
 @media (prefers-reduced-motion: reduce){.track{scroll-behavior:auto}}
 
-/* ── 支払い周期ごとの内訳（毎月 | 毎年 を同じ形で並べる。重ならず、足すと合計） ── */
-.glance{min-width:0}
-.tiles{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3)}
-.tile:last-child:nth-child(odd){grid-column:1 / -1}
-.tile{min-width:0;padding:var(--space-4) var(--space-5);background:var(--color-surface);border:1px solid var(--color-border);border-radius:var(--radius-lg)}
-.tile .lbl{display:block;font-size:var(--font-size-sm);font-weight:600;color:var(--color-text-secondary)}
-.tile .amt{margin-top:var(--space-2)}
-.tile .sub{display:block;margin-top:var(--space-2);font-size:var(--font-size-sm);color:var(--color-text-secondary);font-variant-numeric:tabular-nums}
-.tile .sub + .sub{margin-top:0}
-.tile.is-empty .amt{color:var(--color-text-secondary)}
 
-/* ── 端末内保存の説明 ── */
-.note{margin-top:var(--space-12);padding-top:var(--space-6);border-top:1px solid var(--color-border);font-size:var(--font-size-sm);color:var(--color-text-secondary);max-width:40em}
 
 /* ── シート（下から出る画面） ── */
 .sheet{border:0;padding:0;background:var(--color-surface);color:var(--color-text-primary);width:100%;max-width:100%;max-height:min(92dvh,var(--vvh,100dvh));margin:auto 0 0;border-radius:var(--radius-xl) var(--radius-xl) 0 0;box-shadow:var(--shadow-md);overflow:auto;transform:translateY(calc(var(--drag,0px) - var(--kb,0px)))}
@@ -289,20 +277,18 @@ main{padding-block:var(--space-8) var(--space-16)}
 <main class="wrap">
   <div id="sentinel" aria-hidden="true"></div>
   <div class="layout">
-    <section class="summary" aria-labelledby="hSummary">
-      <div class="summary-top"><h2 id="hSummary">合計</h2><span class="when" id="heroMonth"></span></div>
-      <div class="figs">
-        <div class="fig">
-          <span class="fig-lbl">月あたり</span>
-          <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
-        </div>
-        <div class="fig">
-          <span class="fig-lbl">年あたり</span>
-          <p class="amount amount-sub"><span class="yen" aria-hidden="true">¥</span><span id="heroYear">0</span><span class="sr">円</span></p>
-        </div>
-      </div>
-      <p class="meta" id="heroCount">0件</p>
-    </section>
+    <div class="totals">
+      <section class="total" aria-labelledby="hMonth">
+        <div class="total-top"><h2 id="hMonth">月あたり</h2><span class="when" id="heroMonth"></span></div>
+        <p class="amount"><span class="yen" aria-hidden="true">¥</span><span id="heroAmount">0</span><span class="sr">円</span></p>
+        <p class="meta" id="heroCount">0件</p>
+      </section>
+      <section class="total" aria-labelledby="hYear">
+        <div class="total-top"><h2 id="hYear">年あたり</h2></div>
+        <p class="amount amount-year"><span class="yen" aria-hidden="true">¥</span><span id="heroYear">0</span><span class="sr">円</span></p>
+        <p class="meta">月あたり × 12か月</p>
+      </section>
+    </div>
 
     <div class="col">
     <section class="ledger" aria-labelledby="hList">
@@ -330,13 +316,8 @@ main{padding-block:var(--space-8) var(--space-16)}
       </div>
     </section>
 
-    <section class="glance" id="glance" aria-labelledby="hGlance" hidden>
-      <div class="section-head"><h2 id="hGlance">支払い周期ごと</h2></div>
-      <div class="tiles" id="tiles"></div>
-    </section>
     </div>
   </div>
-  <p class="note">登録した内容は、この端末のブラウザの中にだけ保存されます。外部には送信されません。機種変更のときは、右上の「設定」からバックアップを保存してください。</p>
 </main>
 
 <dialog class="sheet" id="dlg" aria-labelledby="dlgTitle">
@@ -431,10 +412,10 @@ main{padding-block:var(--space-8) var(--space-16)}
 const KEY = 'tsukizuki.v1';
 const SORT_KEY = 'tsukizuki.sort';
 const CYCLES = {
-  month:   { label: '毎月',     tile: '毎月払い',   unit: '/月',    months: 1 },
-  quarter: { label: '3か月ごと', tile: '3か月ごと',  unit: '/3か月', months: 3 },
-  half:    { label: '半年ごと',  tile: '半年ごと',   unit: '/半年',  months: 6 },
-  year:    { label: '毎年',     tile: '毎年払い',   unit: '/年',    months: 12 },
+  month:   { label: '毎月',     unit: '/月',    months: 1 },
+  quarter: { label: '3か月ごと', unit: '/3か月', months: 3 },
+  half:    { label: '半年ごと',  unit: '/半年',  months: 6 },
+  year:    { label: '毎年',     unit: '/年',    months: 12 },
 };
 const $ = (s, r = document) => r.querySelector(s);
 const el = (tag, attrs = {}, children = []) => {
@@ -523,24 +504,6 @@ function render() {
   $('#ledgerTools').hidden = items.length === 0;
   syncTrack();
 
-  /* 支払い周期ごとの内訳。毎月 | 毎年 を上段に常に並べ、3か月・半年は登録があるときだけ下段に */
-  $('#glance').hidden = items.length === 0;
-  const tilesEl = $('#tiles');
-  tilesEl.replaceChildren();
-  for (const c of ['month', 'year', 'quarter', 'half']) {
-    const list = active.filter(i => i.cycle === c);
-    if (!list.length && c !== 'month' && c !== 'year') continue;
-    const billed = list.reduce((s, i) => s + i.amount, 0);
-    const perMo = list.reduce((s, i) => s + monthly(i), 0);
-    const n = list.length;
-    const sub = [el('span', { class: 'sub', text: n ? `${n}件` : '登録なし' })];
-    if (n && c !== 'month') sub.push(el('span', { class: 'sub', text: `≈ ${yen(perMo)} /月` }));
-    tilesEl.append(el('div', { class: 'tile' + (n ? '' : ' is-empty') }, [
-      el('span', { class: 'lbl', text: CYCLES[c].tile }),
-      amountEl(billed, CYCLES[c].unit),
-      ...sub,
-    ]));
-  }
 }
 
 /* ── 横スライド: 進捗バーと送りボタン（スクロール位置に追従） ── */
